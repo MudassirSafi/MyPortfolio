@@ -1,0 +1,160 @@
+@import "tailwindcss";
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* ---------- Neon + Glass Tokens ---------- */
+:root {
+  --bg: #07070b;
+
+  /* Neon core colors */
+  --neon-pink: #ff4fd8;
+  --neon-purple: #7c3aed;
+  --neon-cyan: #00e5ff;
+
+  /* Glass schema */
+  --glass-bg: rgba(10, 20, 30, 0.45);
+  --glass-border: rgba(0, 255, 255, 0.25);
+  --glass-shadow: 0 0 25px rgba(0, 255, 255, 0.35);
+
+  --text-primary: #e8f9ff;
+  --text-secondary: #a0b8c8;
+}
+
+/* ---------- Global ---------- */
+body {
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: 'Inter', system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+/* ---------- Glassy Card ---------- */
+.glass-card {
+  backdrop-filter: blur(18px) saturate(150%);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: 1.5rem;
+  transition: all 0.4s ease;
+}
+
+.glass-card:hover {
+  box-shadow: 0 0 35px rgba(0, 255, 255, 0.55);
+  transform: translateY(-3px);
+}
+
+/* ---------- Navbar Glass ---------- */
+header {
+  backdrop-filter: blur(12px) saturate(140%);
+  background: rgba(10, 20, 30, 0.35);
+  border-bottom: 1px solid rgba(0, 255, 255, 0.15);
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.15);
+}
+
+/* ---------- Navbar Links ---------- */
+.nav-link {
+  position: relative;
+  color: var(--text-primary);
+  transition: color 0.25s ease;
+  font-weight: 500;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--neon-cyan), var(--neon-pink));
+  transition: width 0.3s ease;
+  border-radius: 2px;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  color: var(--neon-cyan);
+  text-shadow: 0 0 10px var(--neon-cyan);
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 100%;
+}
+
+/* ---------- Neon Text ---------- */
+.neon-text {
+  font-family: "Tilt Neon", "Neonderthaw", system-ui, sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.015em;
+  color: #fff;
+  text-shadow:
+    0 0 12px var(--neon-pink),
+    0 0 28px var(--neon-purple),
+    0 0 48px var(--neon-cyan);
+  animation: neonPulse 4s ease-in-out infinite alternate;
+}
+
+@keyframes neonPulse {
+  0%, 100% {
+    text-shadow:
+      0 0 10px var(--neon-pink),
+      0 0 25px var(--neon-purple),
+      0 0 45px var(--neon-cyan);
+  }
+  50% {
+    text-shadow:
+      0 0 18px var(--neon-pink),
+      0 0 40px var(--neon-purple),
+      0 0 70px var(--neon-cyan);
+  }
+}
+
+/* ---------- Buttons ---------- */
+.btn-ghost {
+  background: linear-gradient(90deg, rgba(255,79,216,0.08), rgba(124,58,237,0.06));
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 0.55rem 1.2rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(6px);
+}
+
+.btn-ghost:hover {
+  background: linear-gradient(90deg, rgba(255,79,216,0.25), rgba(124,58,237,0.2));
+  box-shadow: 0 0 12px rgba(255,79,216,0.3), 0 0 24px rgba(124,58,237,0.3);
+  transform: translateY(-2px);
+}
+
+/* ---------- Liquid Text Effect ---------- */
+.liquid-text {
+  -webkit-filter: url(#liquid-distort);
+  filter: url(#liquid-distort);
+  color: white;
+  text-shadow:
+    0 0 15px var(--neon-pink),
+    0 0 30px var(--neon-purple),
+    0 0 60px var(--neon-cyan);
+  overflow: visible;
+}
+
+.liquid-text:hover {
+  color: var(--neon-cyan);
+  text-shadow:
+    0 0 25px var(--neon-cyan),
+    0 0 50px var(--neon-pink),
+    0 0 80px var(--neon-purple);
+}
+
+/* ---------- Flicker ---------- */
+@keyframes neon-flicker {
+  0%, 100% { opacity: 1; filter: drop-shadow(0 0 12px rgba(255,79,216,0.9)); }
+  50% { opacity: 0.95; filter: drop-shadow(0 0 8px rgba(124,58,237,0.9)); }
+}
+.neon-flicker {
+  animation: neon-flicker 3.5s ease-in-out infinite alternate;
+}

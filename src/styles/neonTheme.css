@@ -1,0 +1,30 @@
+:root {
+  /* --- Core Neon Theme Colors --- */
+  --neon-primary: #00ffff;
+  --neon-accent: #0ff0fc;
+  --neon-border: rgba(0, 255, 255, 0.4);
+  --neon-glow: rgba(0, 255, 255, 0.5);
+  --neon-bg: rgba(255, 255, 255, 0.05);
+  --neon-text: #aeefff;
+
+  /* --- Shadows & Effects --- */
+  --neon-card-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+  --neon-img-shadow: 0 0 25px rgba(0, 255, 255, 0.5);
+
+  /* --- Accent Gradients --- */
+  --neon-gradient: linear-gradient(90deg, #00ffff 0%, #3b82f6 100%);
+}
+
+/* Optional: global glow class for reuse */
+.neon-glow {
+  box-shadow: var(--neon-card-shadow);
+  border-color: var(--neon-border);
+}
+
+/* Global glass style */
+.glass-card {
+  backdrop-filter: blur(10px);
+  background: var(--neon-bg);
+  border: 1px solid var(--neon-border);
+  box-shadow: var(--neon-card-shadow);
+}
