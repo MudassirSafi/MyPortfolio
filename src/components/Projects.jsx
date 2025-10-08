@@ -1,5 +1,5 @@
-// src/components/Projects.jsx
 import React, { useEffect, useRef, useState } from "react";
+import "../styles/neonTheme.css"; // same theme file used in About.jsx
 
 // --- Data for your projects
 const projects = [
@@ -90,46 +90,49 @@ function ProjectCard({ project, scrollDir }) {
   return (
     <div ref={ref} className="project-card w-full max-w-4xl mx-auto mb-12 px-4">
       <div
-        className={`card-inner rounded-2xl overflow-hidden border border-pink-400/20 bg-white/10 backdrop-blur-xl shadow-[0_0_25px_rgba(255,0,150,0.4)] transition-transform duration-700 ease-[cubic-bezier(.2,.9,.2,1)] ${
+        className={`rounded-3xl overflow-hidden border border-[var(--neon-border)] bg-[var(--glass-bg)] backdrop-blur-xl shadow-[var(--neon-card-shadow)] transition-transform duration-700 ease-[cubic-bezier(.2,.9,.2,1)] hover:animate-neonPulse ${
           open ? "rotate-x-0" : "rotate-x-80"
         }`}
       >
+        {/* Image Section */}
         <div className="h-60 sm:h-72 w-full overflow-hidden transform-origin-top transition-transform">
           <img
             src={project.img}
             alt={project.title}
-            className="w-full h-full object-cover opacity-90"
+            className="w-full h-full object-cover opacity-90 hover:scale-105 transition-transform duration-500"
             draggable={false}
           />
         </div>
 
+        {/* Text Section */}
         <div className="p-6 flex flex-col gap-4">
-          <h3 className="text-2xl font-semibold text-white drop-shadow-[0_0_10px_rgba(255,0,150,0.8)]">
+          <h3
+            className="text-2xl font-semibold drop-shadow-[0_0_10px_var(--neon-primary)]"
+            style={{ color: "var(--neon-primary)" }}
+          >
             {project.title}
           </h3>
-          <p className="text-sm text-gray-300">
+          <p className="text-gray-300 text-sm sm:text-base">
             Explore the full build & live version of this project 👇
           </p>
 
-          {/* Buttons Section */}
+          {/* Buttons */}
           <div className="flex gap-4 mt-2 flex-wrap">
             <a
               href={project.github}
               target="_blank"
               rel="noreferrer"
-              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-pink-600 to-indigo-600 hover:from-pink-500 hover:to-indigo-500 transition-all duration-300 shadow-md hover:shadow-pink-500/40 text-white text-sm font-medium"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-white bg-gradient-to-r from-[var(--neon-primary)] to-[var(--neon-accent)] hover:opacity-90 transition-all duration-300 shadow-[0_0_15px_var(--neon-accent)]"
             >
-              <i className="fa-brands fa-github text-lg"></i>
-              GitHub
+              <i className="fa-brands fa-github text-lg"></i> GitHub
             </a>
             <a
               href={project.live}
               target="_blank"
               rel="noreferrer"
-              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-indigo-600 to-pink-600 hover:from-indigo-500 hover:to-pink-500 transition-all duration-300 shadow-md hover:shadow-indigo-500/40 text-white text-sm font-medium"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-white bg-gradient-to-r from-[var(--neon-accent)] to-[var(--neon-primary)] hover:opacity-90 transition-all duration-300 shadow-[0_0_15px_var(--neon-primary)]"
             >
-              <i className="fa-solid fa-globe text-lg"></i>
-              Live Demo
+              <i className="fa-solid fa-globe text-lg"></i> Live Demo
             </a>
           </div>
         </div>
@@ -148,6 +151,21 @@ export default function Projects() {
       @keyframes rotateNeon {
         from { transform: rotate(0deg); }
         to { transform: rotate(360deg); }
+      }
+      @keyframes neonPulse {
+        0%, 100% {
+          box-shadow: 0 0 25px var(--neon-primary),
+                      0 0 50px var(--neon-accent);
+          border-color: var(--neon-border);
+        }
+        50% {
+          box-shadow: 0 0 40px var(--neon-accent),
+                      0 0 70px var(--neon-primary);
+          border-color: var(--neon-accent);
+        }
+      }
+      .animate-neonPulse {
+        animation: neonPulse 2.8s ease-in-out infinite alternate;
       }
       .rotate-x-80 {
         transform: perspective(1000px) rotateX(-80deg) translateY(30px);
@@ -174,8 +192,11 @@ export default function Projects() {
       <div className="neon-bg" aria-hidden="true"></div>
 
       {/* Glassy Heading */}
-      <div className="max-w-6xl mx-auto text-center mb-16 px-4 bg-white/10 backdrop-blur-md border border-pink-400/20 rounded-2xl shadow-[0_0_25px_rgba(255,0,150,0.4)] py-8">
-        <h2 className="text-4xl sm:text-5xl font-bold text-white mb-3 drop-shadow-[0_0_15px_rgba(255,0,150,0.9)]">
+      <div className="max-w-6xl mx-auto text-center mb-16 px-4 glass-card border border-[var(--neon-border)] shadow-[var(--neon-card-shadow)] rounded-3xl py-8 backdrop-blur-xl">
+        <h2
+          className="text-4xl sm:text-5xl font-bold mb-3 drop-shadow-[0_0_15px_var(--neon-primary)]"
+          style={{ color: "var(--neon-primary)" }}
+        >
           My Projects
         </h2>
         <p className="text-gray-300 text-sm sm:text-base">
@@ -183,6 +204,7 @@ export default function Projects() {
         </p>
       </div>
 
+      {/* Cards */}
       <div className="flex flex-col items-center gap-10">
         {projects.map((p) => (
           <ProjectCard key={p.id} project={p} scrollDir={scrollDir} />

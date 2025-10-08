@@ -1,5 +1,5 @@
 // src/components/Navbar.jsx
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 
 export default function Navbar() {
@@ -7,13 +7,16 @@ export default function Navbar() {
   const [active, setActive] = useState("About");
 
   const handleScroll = (id) => {
-    const section = document.getElementById(id.toLowerCase());
-    if (section) {
-      section.scrollIntoView({ behavior: "smooth", block: "start" });
-      setActive(id);
-      setOpen(false);
-    }
-  };
+  const section = document.getElementById(id.toLowerCase());
+  if (section) {
+    section.scrollIntoView({ behavior: "smooth", block: "start" });
+    setActive(id);
+    // Delay closing menu to ensure scroll works properly
+    setTimeout(() => setOpen(false), 500);
+  }
+};
+
+  const navLinks = ["About", "Projects", "Experience", "Skills", "Contact"];
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 backdrop-blur-lg bg-white/5 border-b border-cyan-400/30 shadow-[0_0_25px_rgba(0,255,255,0.25)]">
@@ -30,18 +33,21 @@ export default function Navbar() {
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-6">
-          {["About", "Projects", "Contact"].map((link) => (
+          {navLinks.map((link) => (
             <button
               key={link}
               onClick={() => handleScroll(link)}
               className={`nav-link text-sm font-medium ${
-                active === link ? "active" : ""
-              }`}
+                active === link ? "text-cyan-300" : "text-white hover:text-cyan-400"
+              } transition`}
             >
               {link}
             </button>
           ))}
-          <a href="/resume.pdf" className="btn-ghost text-sm font-medium text-white">
+          <a
+            href="/resume.pdf"
+            className="btn-ghost text-sm font-medium text-white hover:text-cyan-300"
+          >
             Resume
           </a>
         </div>
@@ -71,18 +77,18 @@ export default function Navbar() {
         className="md:hidden overflow-hidden bg-white/10 backdrop-blur-xl border-t border-cyan-400/20"
       >
         <div className="px-6 py-4 flex flex-col gap-3">
-          {["About", "Projects", "Contact"].map((link) => (
+          {navLinks.map((link) => (
             <button
               key={link}
               onClick={() => handleScroll(link)}
               className={`nav-link text-left text-sm font-medium ${
-                active === link ? "active" : ""
+                active === link ? "text-cyan-300" : "text-white hover:text-cyan-400"
               }`}
             >
               {link}
             </button>
           ))}
-          <a href="/resume.pdf" className="btn-ghost text-sm font-medium text-white">
+          <a href="/resume.pdf" className="btn-ghost text-sm font-medium text-white hover:text-cyan-300">
             Resume
           </a>
         </div>

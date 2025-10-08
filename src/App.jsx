@@ -5,6 +5,9 @@ import Hero from './components/Hero'
 import About from './components/About'
 import Projects from './components/Projects'
 import './styles/neonTheme.css'
+import Experience from "./components/Experience";
+import Skills from "./components/Skills";
+import Contact from './components/Contact'
 
 
 export default function App() {
@@ -22,9 +25,10 @@ export default function App() {
         <section id="projects">
           <Projects />
         </section>
-        <section id="contact" className="py-32 text-center">
-          <h2 className="text-3xl font-semibold text-white">Contact Section</h2>
-          <p className="text-gray-400 mt-3">Soon to be filled with your cool info 😎</p>
+        <Experience />
+        <Skills />
+        <section id="contact">
+          <Contact />
         </section>
       </main>
     </div>
