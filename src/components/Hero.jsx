@@ -1,176 +1,99 @@
 // src/components/Hero.jsx
-import React, { Suspense, useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
-import { EXRLoader } from "three/examples/jsm/loaders/EXRLoader.js";
-import { HeroHeading } from "./HeroHeading";
 import { motion } from "framer-motion";
+import { HeroHeading } from "./HeroHeading";
 
-function SVGFilters() {
-  return (
-    <svg
-      aria-hidden="true"
-      focusable="false"
-      style={{
-        position: "absolute",
-        width: 0,
-        height: 0,
-        left: 0,
-        top: 0,
-        pointerEvents: "none",
-      }}
-    >
-      <defs>
-        <filter id="liquid-distort" x="-20%" y="-20%" width="140%" height="140%">
-          <feTurbulence
-            baseFrequency="0.02 0.04"
-            numOctaves="3"
-            seed="2"
-            result="turb"
-          />
-          <feDisplacementMap
-            in="SourceGraphic"
-            in2="turb"
-            scale="18"
-            xChannelSelector="R"
-            yChannelSelector="G"
-          />
-        </filter>
-      </defs>
-    </svg>
-  );
-}
-
-function PanoramaSphere({ src, hoverRef, dragRef }) {
-  const ref = useRef();
-  const [texture, setTexture] = useState(null);
-
-  useEffect(() => {
-    const loader = new EXRLoader();
-    loader.load(
-      src,
-      (tex) => {
-        tex.mapping = THREE.EquirectangularReflectionMapping;
-        tex.encoding = THREE.sRGBEncoding;
-        tex.anisotropy = 8;
-        setTexture(tex);
-      },
-      undefined,
-      (err) => console.error("Error loading EXR:", err)
-    );
-  }, [src]);
-
-  const smoothRef = useRef(0);
-  useFrame(() => {
-    if (!ref.current) return;
-    const hover = hoverRef.current || 0;
-    const hoverAngle = hover * 0.35;
-    smoothRef.current += (hoverAngle - smoothRef.current) * 0.08;
-    const target = (dragRef.current || 0) + smoothRef.current;
-    const auto = Math.sin(performance.now() / 7000) * 0.002;
-    ref.current.rotation.y = THREE.MathUtils.lerp(
-      ref.current.rotation.y || 0,
-      target + auto,
-      0.06
-    );
+function StarField({ cursor }) {
+  const pointsRef = useRef();
+  const [positions] = useState(() => {
+    const count = 2000;
+    const arr = new Float32Array(count * 3);
+    for (let i = 0; i < count * 3; i++) {
+      arr[i] = (Math.random() - 0.5) * 20;
+    }
+    return arr;
   });
 
-  if (!texture) return null;
+  useFrame(() => {
+    if (!pointsRef.current) return;
+    const time = performance.now() * 0.0005;
+    pointsRef.current.rotation.y = time * 0.05;
+
+    // Update opacity near cursor
+    const material = pointsRef.current.material;
+    const dist = Math.sqrt(cursor.current.x ** 2 + cursor.current.y ** 2);
+    material.opacity = THREE.MathUtils.lerp(0.15, 0.9, 1 - Math.min(dist * 1.2, 1));
+  });
+
   return (
-    <mesh ref={ref} scale={[-1, 1, 1]}>
-      <sphereGeometry args={[50, 64, 48]} />
-      <meshBasicMaterial map={texture} side={THREE.BackSide} toneMapped={false} />
-    </mesh>
+    <points ref={pointsRef}>
+      <bufferGeometry>
+        <bufferAttribute
+          attach="attributes-position"
+          count={positions.length / 3}
+          array={positions}
+          itemSize={3}
+        />
+      </bufferGeometry>
+      <pointsMaterial
+        size={0.04}
+        color="#0ff"
+        transparent
+        opacity={0.2}
+        sizeAttenuation
+      />
+    </points>
   );
 }
 
 export default function Hero() {
   const containerRef = useRef(null);
-  const hoverRef = useRef(0);
-  const dragRef = useRef(0);
-  const dragging = useRef(false);
-  const lastX = useRef(0);
+  const cursor = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-    const isTouch = window.matchMedia("(pointer: coarse), (hover: none)").matches;
-    if (isTouch) return;
-
-    const onPointerMove = (e) => {
-      const rect = el.getBoundingClientRect();
-      const nx = ((e.clientX - rect.left) - rect.width / 2) / (rect.width / 2);
-      if (!dragging.current) hoverRef.current = Math.max(-1, Math.min(1, nx));
+    const handleMove = (e) => {
+      const rect = containerRef.current.getBoundingClientRect();
+      cursor.current.x = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
+      cursor.current.y = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
     };
-    const onPointerDown = (e) => {
-      dragging.current = true;
-      lastX.current = e.clientX;
-    };
-    const onPointerUp = () => (dragging.current = false);
-    const onPointerDrag = (e) => {
-      if (!dragging.current) return;
-      const dx = e.clientX - lastX.current;
-      lastX.current = e.clientX;
-      dragRef.current += -dx * 0.0045;
-    };
-
-    el.addEventListener("pointermove", onPointerMove);
-    el.addEventListener("pointerdown", onPointerDown);
-    el.addEventListener("pointermove", onPointerDrag);
-    window.addEventListener("pointerup", onPointerUp);
-    return () => {
-      el.removeEventListener("pointermove", onPointerMove);
-      el.removeEventListener("pointerdown", onPointerDown);
-      el.removeEventListener("pointermove", onPointerDrag);
-      window.removeEventListener("pointerup", onPointerUp);
-    };
+    window.addEventListener("pointermove", handleMove);
+    return () => window.removeEventListener("pointermove", handleMove);
   }, []);
-
-  const panoURL =
-    "https://dl.polyhaven.org/file/ph-assets/HDRIs/exr/4k/neon_photostudio_4k.exr";
 
   return (
     <section
       id="hero"
       ref={containerRef}
-      className="relative h-screen overflow-hidden bg-black"
+      className="relative h-screen overflow-hidden bg-black flex flex-col items-center justify-center text-center"
     >
-      <SVGFilters />
-
-      {/* Background Canvas */}
+      {/* Stars background */}
       <Canvas
         className="absolute inset-0 z-0"
-        camera={{ position: [0, 0, 0.1], fov: 70 }}
+        camera={{ position: [0, 0, 3], fov: 75 }}
       >
-        <Suspense fallback={null}>
-          <PanoramaSphere src={panoURL} hoverRef={hoverRef} dragRef={dragRef} />
-        </Suspense>
+        <StarField cursor={cursor} />
       </Canvas>
 
-      {/* Dark overlay for contrast */}
-      <div
-        className="absolute inset-0 z-10"
-        style={{
-          background:
-            "radial-gradient(circle at 35% 35%, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.55) 40%, rgba(0,0,0,0.85) 100%)",
-        }}
-      />
+      {/* Subtle gradient overlay for depth */}
+      <div className="absolute inset-0 z-10 bg-gradient-to-b from-black/30 via-transparent to-black/70 pointer-events-none" />
 
-      {/* Floating heading layer */}
-      <div className="absolute inset-0 z-50 flex flex-col items-center justify-center text-center px-6">
+      {/* Hero content */}
+      <div className="absolute inset-0 z-50 flex flex-col items-center justify-center px-6">
         <HeroHeading />
         <motion.p
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6 }}
-          className="mt-4 text-lg text-slate-200/90"
+          className="mt-4 text-lg text-cyan-200/80 backdrop-blur-md"
         >
           A Smooth Designer through Coding.
         </motion.p>
       </div>
 
-      {/* Bottom gradient fade */}
-      <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-black/70 to-transparent pointer-events-none" />
+      {/* Bottom fade */}
+      <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black/90 to-transparent pointer-events-none" />
     </section>
   );
 }
