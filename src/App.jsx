@@ -359,16 +359,31 @@ const FloatingCard = ({ children, className = "", delay = 0 }) => {
 
 // Custom Loader Component
 const Loader = ({ image }) => {
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setProgress(prev => {
+        if (prev >= 100) {
+          clearInterval(interval);
+          return 100;
+        }
+        return prev + 1;
+      });
+    }, 25); // ~2.5s total duration
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[#0a0a0f]">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[#030305]">
       <div className="relative flex flex-col items-center">
         <div className="relative w-32 h-32 mb-8">
           {/* Pulsing rings */}
-          <div className="absolute inset-0 rounded-full border-4 border-red-500/20 animate-ping" />
-          <div className="absolute inset-0 rounded-full border-2 border-red-500 animate-pulse" />
+          <div className="absolute inset-0 rounded-full border-4 border-red-500/10 animate-ping" />
+          <div className="absolute inset-0 rounded-full border-2 border-red-500/30 animate-pulse" />
 
           {/* Profile Image */}
-          <div className="absolute inset-2 rounded-full overflow-hidden border-2 border-white/10 bg-gray-900">
+          <div className="absolute inset-2 rounded-full overflow-hidden border-2 border-white/5 bg-gray-900 shadow-2xl">
             <img
               src={image}
               alt="Loading..."
@@ -381,13 +396,19 @@ const Loader = ({ image }) => {
           </div>
         </div>
 
-        {/* Loading Text */}
-        <div className="flex flex-col items-center gap-2">
-          <div className="text-2xl font-bold tracking-widest text-white font-display uppercase">
-            MUDASSIR <span className="text-red-500">SAFI</span>
+        {/* Loading Text & Percentage */}
+        <div className="flex flex-col items-center gap-4">
+          <div className="text-3xl font-black tracking-tighter text-white font-display">
+            {progress}%
           </div>
-          <div className="h-1 w-48 bg-gray-800 rounded-full overflow-hidden">
-            <div className="h-full bg-gradient-to-r from-red-500 to-blue-500 animate-load" style={{ width: '100%' }} />
+          <div className="text-xs font-bold tracking-[0.3em] text-gray-500 uppercase">
+            Initializing Experience
+          </div>
+          <div className="h-0.5 w-64 bg-white/5 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-gradient-to-r from-red-600 to-blue-600 transition-all duration-300 ease-out"
+              style={{ width: `${progress}%` }}
+            />
           </div>
         </div>
       </div>
@@ -407,7 +428,7 @@ export default function PremiumPortfolio() {
     // Simulate loading
     const timer = setTimeout(() => {
       setIsLoaded(true);
-    }, 2500);
+    }, 3000);
     return () => clearTimeout(timer);
   }, []);
 
@@ -425,7 +446,8 @@ export default function PremiumPortfolio() {
           const element = document.getElementById(section);
           if (element) {
             const rect = element.getBoundingClientRect();
-            return rect.top <= 150 && rect.bottom >= 150;
+            // Adjusted threshold for better sensitivity
+            return rect.top <= window.innerHeight * 0.4 && rect.bottom >= window.innerHeight * 0.4;
           }
           return false;
         });
@@ -436,6 +458,38 @@ export default function PremiumPortfolio() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [currentPage]);
+
+  // Typing Effect Component
+  const Typewriter = ({ text }) => {
+    const [displayText, setDisplayText] = useState("");
+    const [isComplete, setIsComplete] = useState(false);
+
+    useEffect(() => {
+      let i = 0;
+      setDisplayText("");
+      const timer = setInterval(() => {
+        if (i < text.length) {
+          setDisplayText(prev => prev + text.charAt(i));
+          i++;
+        } else {
+          clearInterval(timer);
+          setIsComplete(true);
+        }
+      }, 100);
+      return () => clearInterval(timer);
+    }, [text]);
+
+    return (
+      <span className="relative">
+        {displayText}
+        <motion.span
+          animate={{ opacity: [0, 1, 0] }}
+          transition={{ duration: 0.8, repeat: Infinity }}
+          className="inline-block w-[3px] h-[0.8em] bg-red-500 ml-1 translate-y-1"
+        />
+      </span>
+    );
+  };
 
   const scrollToSection = (id) => {
     setCurrentPage('home');
@@ -471,32 +525,39 @@ export default function PremiumPortfolio() {
 
   const projects = [
     {
+      title: "BizzRolin Software House",
+      description: "A premium software house platform featuring automated project management, client portals, and dynamic service showcases. Built for high-performance agencies.",
+      tech: ["Next.js", "Tailwind CSS", "Framer Motion", "Node.js"],
+      gradient: "from-blue-600 to-indigo-700",
+      stats: { projects: "20+", clients: "15+", uptime: "99.9%" }
+    },
+    {
       title: "SME Dashboard",
       description: "Comprehensive business management dashboard for SMEs with real-time analytics, inventory tracking, and financial reporting.",
       tech: ["React", "Express", "MongoDB", "Chart.js"],
-      gradient: "from-blue-600 to-blue-400",
+      gradient: "from-red-600 to-red-400",
       stats: { users: "1.2K+", uptime: "99.9%", status: "Live" }
     },
     {
       title: "2Wolf E-commerce",
       description: "Premium e-commerce platform with seamless shopping experience, secure payments, and dynamic product management.",
       tech: ["Next.js", "Tailwind CSS", "Stripe", "Node.js"],
-      gradient: "from-red-600 to-red-400",
+      gradient: "from-gray-900 to-gray-700",
       stats: { sales: "5K+", rating: "4.9/5", speed: "98/100" }
     },
     {
-      title: "Panorama Group",
-      description: "Corporate website for Panorama Group of Companies, featuring a sleek modern design and multi-sector information architecture.",
-      tech: ["React", "Framer Motion", "Styled Components"],
-      gradient: "from-gray-800 to-gray-600",
-      stats: { sectors: "8+", views: "10K+", design: "Premium" }
+      title: "CyberPulse Security",
+      description: "Real-time threat monitoring dashboard with AI-driven anomaly detection and interactive vulnerability reports.",
+      tech: ["React", "Python", "TensorFlow", "WebSocket"],
+      gradient: "from-cyan-600 to-blue-500",
+      stats: { threats: "10K+", scans: "500+", score: "99/100" }
     },
     {
-      title: "BudVizion Streamer",
-      description: "Worked on BudVizion Streamer web application, optimizing streaming performance and implementing real-time viewer interactions.",
-      tech: ["React", "WebRTC", "Socket.io", "AWS"],
-      gradient: "from-green-600 to-emerald-400",
-      stats: { viewers: "50K+", latency: "<100ms", platform: "Web" }
+      title: "CloudFlow DevOps",
+      description: "A comprehensive CI/CD pipeline visualizer and infrastructure management tool for modern cloud deployments.",
+      tech: ["Go", "React", "Docker", "Kubernetes"],
+      gradient: "from-orange-600 to-red-500",
+      stats: { builds: "1K+", deploys: "200+", latency: "<50ms" }
     }
   ];
 
@@ -537,7 +598,8 @@ export default function PremiumPortfolio() {
     target: targetRef,
   });
 
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-75%"]);
+  const xRaw = useTransform(scrollYProgress, [0, 1], ["0%", "-75%"]);
+  const x = useSpring(xRaw, { stiffness: 50, damping: 20, restDelta: 0.001 });
 
   return (
     <div className="min-h-screen bg-[#0a0a0f] text-white font-sans selection:bg-red-500/30">
@@ -682,7 +744,7 @@ export default function PremiumPortfolio() {
                   setShowCVPage(true);
                   setIsMenuOpen(false);
                 }}
-                className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg text-white font-semibold"
+                className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-red-600 to-red-700 rounded-lg text-white font-semibold"
               >
                 <Download className="w-4 h-4" />
                 View Resume
@@ -713,7 +775,9 @@ export default function PremiumPortfolio() {
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-black leading-tight tracking-tighter">
               <span className="text-white">SOFTWARE</span>
               <br />
-              <span className="text-gradient">ENGINEER</span>
+              <span className="text-gradient">
+                <Typewriter text="ENGINEER" />
+              </span>
             </h1>
 
             <p className="text-lg md:text-xl text-gray-400 max-w-xl mx-auto lg:mx-0 leading-relaxed">
@@ -778,55 +842,79 @@ export default function PremiumPortfolio() {
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-32 px-4 relative">
+      <section id="about" className="py-32 px-4 relative overflow-hidden">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-5xl md:text-6xl font-black mb-16 text-center uppercase tracking-tighter">
+          <motion.h2
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="text-5xl md:text-6xl font-black mb-16 text-center uppercase tracking-tighter"
+          >
             About <span className="text-gradient">Me</span>
-          </h2>
+          </motion.h2>
 
-          <FloatingCard>
-            <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-3xl p-12 shadow-2xl">
-              <div className="grid md:grid-cols-2 gap-12 items-center">
-                <div className="space-y-6">
-                  <p className="text-lg text-gray-400 leading-relaxed">
-                    I'm a dedicated <span className="text-white font-black underline decoration-red-500/50">Full Stack Developer</span> with a strong foundation in modern web technologies. My professional journey in software engineering began in 2025, and since then, I've been focused on building scalable, user-centric applications.
-                  </p>
-                  <p className="text-lg text-gray-400 leading-relaxed">
-                    I specialize in the <span className="text-white font-black underline decoration-blue-500/50">MERN Stack</span> and have successfully delivered multiple complex projects, ranging from business dashboards to high-performance e-commerce platforms. I thrive on solving technical challenges and staying ahead of the AI-driven development curve.
-                  </p>
-                  <div className="flex flex-wrap gap-3 pt-4">
-                    {['Problem Solver', 'MERN Expert', 'Quick Learner', 'Detail-Oriented'].map((tag) => (
-                      <span key={tag} className="px-4 py-2 backdrop-blur-md bg-red-500/10 border border-red-500/20 rounded-full text-sm font-bold text-red-400">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  {[
-                    { label: 'Code Quality', value: 98 },
-                    { label: 'Performance', value: 95 },
-                    { label: 'UI/UX Design', value: 92 },
-                    { label: 'Problem Solving', value: 96 }
-                  ].map((skill, i) => (
-                    <div key={i} className="backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl p-6">
-                      <div className="text-4xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-2">
-                        {skill.value}%
-                      </div>
-                      <div className="text-sm text-gray-400">{skill.label}</div>
-                      <div className="mt-3 h-2 bg-white/5 rounded-full overflow-hidden">
-                        <div
-                          className="h-full bg-gradient-to-r from-red-500 to-blue-500 rounded-full transition-all duration-1000"
-                          style={{ width: `${skill.value}%` }}
-                        />
-                      </div>
-                    </div>
-                  ))}
-                </div>
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -100, rotate: -10 }}
+              whileInView={{ opacity: 1, x: 0, rotate: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, type: "spring" }}
+              className="space-y-6"
+            >
+              <p className="text-lg text-gray-400 leading-relaxed">
+                I'm a dedicated <span className="text-white font-black underline decoration-red-500/50">Full Stack Developer</span> with a strong foundation in modern web technologies. My professional journey in software engineering began in 2025, and since then, I've been focused on building scalable, user-centric applications.
+              </p>
+              <p className="text-lg text-gray-400 leading-relaxed">
+                I specialize in the <span className="text-white font-black underline decoration-blue-500/50">MERN Stack</span> and have successfully delivered multiple complex projects, ranging from business dashboards to high-performance e-commerce platforms. I thrive on solving technical challenges and staying ahead of the AI-driven development curve.
+              </p>
+              <div className="flex flex-wrap gap-3 pt-4">
+                {['Problem Solver', 'MERN Expert', 'Quick Learner', 'Detail-Oriented'].map((tag, i) => (
+                  <motion.span
+                    key={tag}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.5 + (i * 0.1) }}
+                    className="px-4 py-2 backdrop-blur-md bg-red-500/10 border border-red-500/20 rounded-full text-sm font-bold text-red-400"
+                  >
+                    {tag}
+                  </motion.span>
+                ))}
               </div>
+            </motion.div>
+
+            <div className="grid grid-cols-2 gap-4">
+              {[
+                { label: 'Code Quality', value: 98, from: { x: 50, y: -50 } },
+                { label: 'Performance', value: 95, from: { x: -50, y: -50 } },
+                { label: 'UI/UX Design', value: 92, from: { x: 50, y: 50 } },
+                { label: 'Problem Solving', value: 96, from: { x: -50, y: 50 } }
+              ].map((skill, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, x: skill.from.x, y: skill.from.y, rotate: 45 }}
+                  whileInView={{ opacity: 1, x: 0, y: 0, rotate: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.8, delay: i * 0.1, type: "spring" }}
+                  className="backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-red-500/30 transition-colors group"
+                >
+                  <div className="text-4xl font-bold bg-gradient-to-r from-red-500 to-blue-500 bg-clip-text text-transparent mb-2">
+                    {skill.value}%
+                  </div>
+                  <div className="text-sm text-gray-400 font-medium tracking-tight uppercase">{skill.label}</div>
+                  <div className="mt-3 h-1 bg-white/5 rounded-full overflow-hidden">
+                    <motion.div
+                      initial={{ width: 0 }}
+                      whileInView={{ width: `${skill.value}%` }}
+                      viewport={{ once: true }}
+                      transition={{ duration: 1.5, delay: 0.5 + (i * 0.1) }}
+                      className="h-full bg-gradient-to-r from-red-500 to-blue-500 rounded-full"
+                    />
+                  </div>
+                </motion.div>
+              ))}
             </div>
-          </FloatingCard>
+          </div>
         </div>
       </section>
 
@@ -927,119 +1015,142 @@ export default function PremiumPortfolio() {
       </section>
 
       {/* Experience Section */}
-      <section id="experience" className="py-32 px-4">
+      <section id="experience" className="py-32 px-4 relative overflow-hidden">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-5xl md:text-6xl font-black mb-16 text-center uppercase tracking-tighter">
-            Experience
-          </h2>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-5xl md:text-6xl font-black mb-16 text-center uppercase tracking-tighter"
+          >
+            Professional <span className="text-gradient">Experience</span>
+          </motion.h2>
 
-          <div className="space-y-8">
+          <div className="relative border-l-2 border-white/5 ml-4 md:ml-0 md:pl-12 space-y-12">
             {experience.map((exp, index) => (
-              <FloatingCard key={index} delay={index * 100}>
-                <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-3xl p-8 hover:bg-white/10 transition-all duration-500">
-                  <div className="flex items-start gap-6">
-                    <div className="p-4 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex-shrink-0">
-                      {exp.icon}
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, x: 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.2 }}
+                className="relative pl-8 md:pl-0"
+              >
+                {/* Timeline Dot */}
+                <div className="absolute -left-[9px] md:-left-[53px] top-2 w-4 h-4 rounded-full bg-red-500 shadow-[0_0_15px_rgba(255,59,48,0.5)] z-10" />
+
+                <div className="glass-card p-8 hover:border-red-500/30">
+                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+                    <div>
+                      <h3 className="text-2xl font-black font-display uppercase text-white">{exp.title}</h3>
+                      <p className="text-red-500 font-bold tracking-widest text-sm uppercase">{exp.company}</p>
                     </div>
-
-                    <div className="flex-1">
-                      <div className="flex items-start justify-between mb-2">
-                        <h3 className="text-2xl font-bold">{exp.title}</h3>
-                        <span className="px-4 py-1 backdrop-blur-md bg-purple-500/20 border border-purple-400/30 rounded-full text-sm text-purple-300">
-                          {exp.period}
-                        </span>
-                      </div>
-
-                      <div className="text-lg text-purple-400 mb-3">{exp.company}</div>
-                      <p className="text-gray-400 mb-4">{exp.description}</p>
-
-                      <div className="space-y-2">
-                        {exp.achievements.map((achievement, i) => (
-                          <div key={i} className="flex items-center gap-2 text-sm text-gray-300">
-                            <div className="w-1.5 h-1.5 bg-purple-400 rounded-full" />
-                            {achievement}
-                          </div>
-                        ))}
-                      </div>
+                    <div className="px-4 py-1.5 bg-white/5 border border-white/10 rounded-full text-xs font-bold text-gray-400 whitespace-nowrap">
+                      {exp.period}
                     </div>
                   </div>
+
+                  <p className="text-gray-400 mb-6 leading-relaxed italic">{exp.description}</p>
+
+                  <ul className="space-y-3">
+                    {exp.achievements.map((achievement, i) => (
+                      <li key={i} className="flex items-start gap-3 group">
+                        <div className="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-500 group-hover:scale-150 transition-transform" />
+                        <span className="text-gray-300 group-hover:text-white transition-colors">{achievement}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-              </FloatingCard>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-32 px-4">
+      <section id="contact" className="py-32 px-4 relative overflow-hidden">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-5xl md:text-6xl font-black mb-8 uppercase tracking-tighter">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-5xl md:text-7xl font-black mb-8 uppercase tracking-tighter"
+          >
             Build <span className="text-gradient">Impact</span>
-          </h2>
-          <p className="text-xl text-gray-300 mb-12 max-w-2xl mx-auto">
-            Have a project in mind? I'm available for freelance work and always excited to collaborate on innovative ideas.
+          </motion.h2>
+          <p className="text-xl text-gray-400 mb-12 max-w-2xl mx-auto font-medium">
+            Have a project in mind? I'm available for freelance work and always excited to collaborate on <span className="text-white">innovative ideas</span>.
           </p>
 
-          <div className="flex flex-wrap gap-6 justify-center mb-12">
-            <a
+          <div className="flex flex-wrap gap-6 justify-center mb-16">
+            <motion.a
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               href="mailto:muhammedmudassir40@gmail.com"
-              className="flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-red-500 to-red-600 rounded-xl font-semibold hover:shadow-2xl hover:shadow-red-500/50 transform hover:scale-105 transition-all duration-300"
+              className="btn-primary flex items-center gap-3 px-10 py-5"
             >
               <Mail className="w-5 h-5" />
               Email Me
-            </a>
-            <a
+            </motion.a>
+            <motion.a
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               href="https://github.com/MudassirSafi"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-3 px-8 py-4 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl font-semibold hover:bg-white/20 transition-all duration-300"
+              className="btn-secondary flex items-center gap-3 px-10 py-5"
             >
               <Github className="w-5 h-5" />
               GitHub
-            </a>
-            <a
+            </motion.a>
+            <motion.a
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               href="https://www.linkedin.com/in/muhammad-mudassir-843964272/"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-3 px-8 py-4 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl font-semibold hover:bg-white/20 transition-all duration-300"
+              className="btn-secondary flex items-center gap-3 px-10 py-5"
             >
               <Linkedin className="w-5 h-5" />
               LinkedIn
-            </a>
+            </motion.a>
           </div>
 
-          <FloatingCard>
-            <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-3xl p-12">
-              <h3 className="text-2xl font-bold mb-8">Quick Contact</h3>
-              <div className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-6">
-                  <input
-                    type="text"
-                    placeholder="Your Name"
-                    className="px-6 py-4 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-400 transition-all"
-                  />
-                  <input
-                    type="email"
-                    placeholder="Your Email"
-                    className="px-6 py-4 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-400 transition-all"
-                  />
-                </div>
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="glass-card p-12 text-left"
+          >
+            <h3 className="text-3xl font-black font-display uppercase mb-8">Start a Conversation</h3>
+            <div className="space-y-6">
+              <div className="grid md:grid-cols-2 gap-6">
                 <input
                   type="text"
-                  placeholder="Project Budget (USD)"
-                  className="w-full px-6 py-4 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-400 transition-all"
+                  placeholder="Your Name"
+                  className="px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-red-500 transition-colors"
                 />
-                <textarea
-                  rows={5}
-                  placeholder="Tell me about your project..."
-                  className="w-full px-6 py-4 backdrop-blur-md bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-400 transition-all resize-none"
+                <input
+                  type="email"
+                  placeholder="Your Email"
+                  className="px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-red-500 transition-colors"
                 />
-                <button className="w-full px-8 py-4 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl font-semibold hover:shadow-2xl hover:shadow-purple-500/50 transform hover:scale-105 transition-all duration-300">
-                  Send Message
-                </button>
               </div>
+              <input
+                type="text"
+                placeholder="Project Budget (USD)"
+                className="w-full px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-red-500 transition-colors"
+              />
+              <textarea
+                rows={5}
+                placeholder="Tell me about your project..."
+                className="w-full px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-red-500 transition-colors resize-none"
+              />
+              <button className="w-full btn-primary py-5 text-lg">
+                Send Message
+              </button>
             </div>
-          </FloatingCard>
+          </motion.div>
         </div>
       </section>
 

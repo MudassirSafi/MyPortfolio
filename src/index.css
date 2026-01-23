@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Outfit:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 @import "tailwindcss";
 
@@ -6,31 +6,45 @@ html {
   scroll-behavior: smooth;
 }
 
-/* ---------- SafeFly Inspired Scheme ---------- */
+/* ---------- Apple-Style Premium Theme ---------- */
 :root {
-  --bg: #0a0a0f;
+  --bg: #030305;
 
-  /* SafeFly core colors */
-  --primary: #ef4444;
-  --primary-glow: rgba(239, 68, 68, 0.4);
-  --secondary: #0ea5e9;
-  --secondary-glow: rgba(14, 165, 233, 0.4);
+  /* Apple Inspired Tones */
+  --primary: #ff3b30;
+  --primary-glow: rgba(255, 59, 48, 0.4);
+  --secondary: #007aff;
+  --secondary-glow: rgba(0, 122, 255, 0.4);
 
   /* Glass schema */
-  --glass-bg: rgba(15, 15, 25, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.1);
-  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+  --glass-bg: rgba(20, 20, 25, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
 
   --text-primary: #ffffff;
-  --text-secondary: #94a3b8;
+  --text-secondary: #86868b;
 }
 
 /* ---------- Global ---------- */
 body {
   background: var(--bg);
   color: var(--text-primary);
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   overflow-x: hidden;
+  letter-spacing: -0.015em;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.font-display {
+  font-family: 'Outfit', sans-serif;
+  letter-spacing: -0.04em;
+  font-weight: 700;
 }
 
 h1,
