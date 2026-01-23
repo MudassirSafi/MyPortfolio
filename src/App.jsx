@@ -23,13 +23,11 @@ export default function PremiumPortfolio() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoaded(true);
-    }, 3000);
+    }, 3500);
     return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
-    setIsLoaded(true);
-
     const handleScroll = () => {
       setScrollY(window.scrollY);
 

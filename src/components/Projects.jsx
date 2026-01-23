@@ -9,8 +9,9 @@ const Projects = () => {
     target: targetRef,
   });
 
-  const xRaw = useTransform(scrollYProgress, [0, 1], ["0%", "-75%"]);
-  const x = useSpring(xRaw, { stiffness: 50, damping: 20, restDelta: 0.001 });
+  // Slower, smoother scroll with adjusted range
+  const xRaw = useTransform(scrollYProgress, [0, 1], ["5%", "-70%"]);
+  const x = useSpring(xRaw, { stiffness: 40, damping: 25, restDelta: 0.001 });
 
   const projects = [
     {
@@ -116,20 +117,30 @@ const Projects = () => {
 
       <section ref={targetRef} id="projects" className="relative h-[300vh] bg-[#0a0a0f]">
         <div className="sticky top-0 h-screen flex items-center overflow-hidden">
-          <div className="absolute top-24 left-0 right-0 text-center px-4">
-            <h2 className="text-4xl md:text-6xl font-black font-display text-white uppercase tracking-tighter">
+          {/* Fixed Heading with Better Visibility */}
+          <div className="absolute top-32 left-0 right-0 text-center px-4 z-20 pointer-events-none">
+            <motion.h2
+              initial={{ opacity: 0, y: -20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="text-5xl md:text-7xl font-black font-display text-white uppercase tracking-tighter drop-shadow-2xl"
+              style={{
+                textShadow: '0 0 40px rgba(0,0,0,0.8), 0 0 20px rgba(255,59,48,0.5)'
+              }}
+            >
               Featured <span className="text-gradient">Projects</span>
-            </h2>
+            </motion.h2>
+            <p className="text-gray-400 mt-4 text-lg font-medium">Scroll to explore →</p>
           </div>
 
-          <motion.div style={{ x }} className="flex gap-8 px-12 md:px-24">
+          <motion.div style={{ x }} className="flex gap-8 px-12 md:px-24 mt-20">
             {projects.map((project, index) => (
               <div
                 key={index}
                 className="group relative w-[350px] md:w-[500px] flex-shrink-0"
                 onClick={() => setSelectedProject(project)}
               >
-                <div className="glass-card overflow-hidden cursor-pointer h-full">
+                <div className="glass-card overflow-hidden cursor-pointer h-full hover:scale-105 transition-transform duration-300">
                   <div className={`h-48 md:h-64 bg-gradient-to-br ${project.gradient} relative overflow-hidden`}>
                     <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-all duration-500" />
                     <div className="absolute inset-0 flex items-center justify-center transform group-hover:scale-110 transition-transform duration-700">

@@ -1,33 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
-const Typewriter = ({ text }) => {
+const Typewriter = ({ text, delay = 0 }) => {
     const [displayText, setDisplayText] = useState("");
-    const [isComplete, setIsComplete] = useState(false);
+    const [currentIndex, setCurrentIndex] = useState(0);
 
     useEffect(() => {
-        let i = 0;
-        setDisplayText("");
-        const timer = setInterval(() => {
-            if (i < text.length) {
-                setDisplayText(prev => prev + text.charAt(i));
-                i++;
-            } else {
-                clearInterval(timer);
-                setIsComplete(true);
-            }
-        }, 100);
-        return () => clearInterval(timer);
-    }, [text]);
+        if (currentIndex < text.length) {
+            const timeout = setTimeout(() => {
+                setDisplayText(prev => prev + text[currentIndex]);
+                setCurrentIndex(prev => prev + 1);
+            }, delay + 80);
+
+            return () => clearTimeout(timeout);
+        }
+    }, [currentIndex, delay, text]);
 
     return (
-        <span className="relative">
+        <span className="relative inline-block">
             {displayText}
-            <motion.span
-                animate={{ opacity: [0, 1, 0] }}
-                transition={{ duration: 0.8, repeat: Infinity }}
-                className="inline-block w-[3px] h-[0.8em] bg-red-500 ml-1 translate-y-1"
-            />
+            {currentIndex < text.length && (
+                <motion.span
+                    animate={{ opacity: [0, 1, 0] }}
+                    transition={{ duration: 0.8, repeat: Infinity, ease: "easeInOut" }}
+                    className="inline-block w-[4px] h-[0.85em] bg-red-500 ml-1 translate-y-1"
+                />
+            )}
         </span>
     );
 };
