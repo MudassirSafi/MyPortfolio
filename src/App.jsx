@@ -788,19 +788,15 @@ export default function PremiumPortfolio() {
             <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-3xl p-12 shadow-2xl">
               <div className="grid md:grid-cols-2 gap-12 items-center">
                 <div className="space-y-6">
-                  <p className="text-lg text-gray-300 leading-relaxed">
-                    I'm a passionate Full Stack Developer with 6+ years of experience building scalable,
-                    high-performance applications. I specialize in modern JavaScript frameworks, cloud
-                    architecture, and creating seamless user experiences.
+                  <p className="text-lg text-gray-400 leading-relaxed">
+                    I'm a dedicated <span className="text-white font-black underline decoration-red-500/50">Full Stack Developer</span> with a strong foundation in modern web technologies. My professional journey in software engineering began in 2025, and since then, I've been focused on building scalable, user-centric applications.
                   </p>
-                  <p className="text-lg text-gray-300 leading-relaxed">
-                    My expertise spans the entire development lifecycle—from architecting robust backend
-                    systems to crafting pixel-perfect frontend interfaces. I've successfully delivered 50+
-                    projects for clients across 15 countries, maintaining a perfect 5.0 rating.
+                  <p className="text-lg text-gray-400 leading-relaxed">
+                    I specialize in the <span className="text-white font-black underline decoration-blue-500/50">MERN Stack</span> and have successfully delivered multiple complex projects, ranging from business dashboards to high-performance e-commerce platforms. I thrive on solving technical challenges and staying ahead of the AI-driven development curve.
                   </p>
                   <div className="flex flex-wrap gap-3 pt-4">
-                    {['Problem Solver', 'Team Leader', 'Quick Learner', 'Detail-Oriented'].map((tag) => (
-                      <span key={tag} className="px-4 py-2 backdrop-blur-md bg-purple-500/20 border border-purple-400/30 rounded-full text-sm text-purple-300">
+                    {['Problem Solver', 'MERN Expert', 'Quick Learner', 'Detail-Oriented'].map((tag) => (
+                      <span key={tag} className="px-4 py-2 backdrop-blur-md bg-red-500/10 border border-red-500/20 rounded-full text-sm font-bold text-red-400">
                         {tag}
                       </span>
                     ))}
@@ -821,7 +817,7 @@ export default function PremiumPortfolio() {
                       <div className="text-sm text-gray-400">{skill.label}</div>
                       <div className="mt-3 h-2 bg-white/5 rounded-full overflow-hidden">
                         <div
-                          className="h-full bg-gradient-to-r from-purple-500 to-pink-500 rounded-full transition-all duration-1000"
+                          className="h-full bg-gradient-to-r from-red-500 to-blue-500 rounded-full transition-all duration-1000"
                           style={{ width: `${skill.value}%` }}
                         />
                       </div>
