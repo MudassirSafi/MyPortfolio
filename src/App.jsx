@@ -84,7 +84,7 @@ export default function PremiumPortfolio() {
         profileImage={profileImage}
       />
 
-      <Hero scrollToSection={scrollToSection} profileImage={profileImage} />
+      <Hero scrollToSection={scrollToSection} profileImage={profileImage} isLoaded={isLoaded} />
       <About />
       <TechStack />
       <Projects />
