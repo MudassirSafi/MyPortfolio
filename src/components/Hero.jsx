@@ -27,8 +27,8 @@ const Hero = ({ scrollToSection, profileImage, isLoaded }) => {
               start={isLoaded}
               loop={true}
               phrases={[
-                { text: "SOFTWARE", className: "text-white" },
-                { text: " ENGINEER", className: "bg-gradient-to-r from-red-500 via-purple-500 to-blue-500 bg-clip-text text-transparent" }
+                { text: "SOFTWARE", className: "text-white", block: true },
+                { text: "ENGINEER", className: "bg-gradient-to-r from-red-500 via-purple-500 to-blue-500 bg-clip-text text-transparent", block: true }
               ]}
             />
           </h1>
