@@ -1,108 +1,84 @@
-import React, { useEffect, useRef, useState } from "react";
-import profileImg from "../assets/profile.png";
-import "../styles/neonTheme.css";
+import React from 'react';
+import { motion } from 'framer-motion';
 
-// --- Hook to detect scroll direction (same as Projects.jsx)
-function useScrollDirection() {
-  const [direction, setDirection] = useState("down");
-  const lastY = useRef(window.scrollY);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentY = window.scrollY;
-      if (Math.abs(currentY - lastY.current) > 5) {
-        setDirection(currentY > lastY.current ? "down" : "up");
-        lastY.current = currentY;
-      }
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  return direction;
-}
-
-export default function About() {
-  const ref = useRef();
-  const scrollDir = useScrollDirection();
-  const [visible, setVisible] = useState(false);
-  const [open, setOpen] = useState(false);
-
-  // detect visibility of the About section
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => setVisible(entry.isIntersecting),
-      { threshold: 0.35 }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
-
-  // control open/close based on scroll direction
-  useEffect(() => {
-    if (!visible) setOpen(false);
-    else setOpen(scrollDir === "down");
-  }, [visible, scrollDir]);
-
-  // add lid animation CSS globally once
-  useEffect(() => {
-    const style = document.createElement("style");
-    style.innerHTML = `
-      .rotate-x-80 { transform: perspective(1000px) rotateX(-80deg) translateY(30px); }
-      .rotate-x-0 { transform: perspective(1000px) rotateX(0deg) translateY(0); }
-      .transition-lid {
-        transition: transform 0.8s cubic-bezier(.2,.9,.2,1);
-        transform-origin: top center;
-      }
-    `;
-    document.head.appendChild(style);
-    return () => style.remove();
-  }, []);
-
+const About = () => {
   return (
-    <section id="about" className="flex justify-center py-32 px-6 sm:px-12">
-      <div
-        ref={ref}
-        className={`relative max-w-5xl w-full flex flex-col sm:flex-row items-center glass-card rounded-3xl p-6 sm:p-10 transition-lid ${
-          open ? "rotate-x-0" : "rotate-x-80"
-        }`}
-      >
-        {/* Left Side - Image */}
-        <div className="flex-1 flex justify-center sm:justify-start mb-8 sm:mb-0">
-          <img
-            src={profileImg}
-            alt="Muhammad Mudassir"
-            className="w-48 h-48 sm:w-64 sm:h-64 rounded-2xl object-cover border border-[var(--neon-border)] shadow-[var(--neon-img-shadow)] hover:scale-105 transition-transform duration-300"
-          />
-        </div>
+    <section id="about" className="py-32 px-4 relative overflow-hidden">
+      <div className="max-w-6xl mx-auto">
+        <motion.h2
+          initial={{ opacity: 0, scale: 0.8 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          className="text-5xl md:text-6xl font-black mb-16 text-center uppercase tracking-tighter"
+        >
+          About <span className="text-gradient">Me</span>
+        </motion.h2>
 
-        {/* Right Side - Text */}
-        <div className="flex-1 text-center sm:text-left space-y-4">
-          <h2
-            className="text-4xl font-bold tracking-wide"
-            style={{ color: "var(--neon-primary)" }}
+        <div className="grid md:grid-cols-2 gap-12 items-center">
+          <motion.div
+            initial={{ opacity: 0, x: -100, rotate: -10 }}
+            whileInView={{ opacity: 1, x: 0, rotate: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, type: "spring" }}
+            className="space-y-6"
           >
-            About Me 💫
-          </h2>
-          <p className="text-gray-300 leading-relaxed text-lg">
-            Hey there! I’m{" "}
-            <span className="font-semibold" style={{ color: "var(--neon-accent)" }}>
-              Muhammad Mudassir
-            </span>
-            , a passionate developer who loves crafting sleek, interactive, and
-            immersive digital experiences. I thrive at the intersection of
-            design, technology, and storytelling.
-          </p>
-          <p className="text-gray-400">
-            My goal? To bring ideas to life with creative code, aesthetic
-            precision, and smooth performance. I specialize in{" "}
-            <span style={{ color: "var(--neon-accent)" }}>React</span>,{" "}
-            <span style={{ color: "var(--neon-accent)" }}>Three.js</span>, and{" "}
-            <span style={{ color: "var(--neon-accent)" }}>Framer Motion</span> for
-            rich web experiences.
-          </p>
+            <p className="text-lg text-gray-400 leading-relaxed">
+              I'm a dedicated <span className="text-white font-black underline decoration-red-500/50">Full Stack Developer</span> with a strong foundation in modern web technologies. My professional journey in software engineering began in 2025, and since then, I've been focused on building scalable, user-centric applications.
+            </p>
+            <p className="text-lg text-gray-400 leading-relaxed">
+              I specialize in the <span className="text-white font-black underline decoration-blue-500/50">MERN Stack</span> and have successfully delivered multiple complex projects, ranging from business dashboards to high-performance e-commerce platforms. I thrive on solving technical challenges and staying ahead of the AI-driven development curve.
+            </p>
+            <div className="flex flex-wrap gap-3 pt-4">
+              {['Problem Solver', 'MERN Expert', 'Quick Learner', 'Detail-Oriented'].map((tag, i) => (
+                <motion.span
+                  key={tag}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.5 + (i * 0.1) }}
+                  className="px-4 py-2 backdrop-blur-md bg-red-500/10 border border-red-500/20 rounded-full text-sm font-bold text-red-400"
+                >
+                  {tag}
+                </motion.span>
+              ))}
+            </div>
+          </motion.div>
+
+          <div className="grid grid-cols-2 gap-4">
+            {[
+              { label: 'Code Quality', value: 98, from: { x: 50, y: -50 } },
+              { label: 'Performance', value: 95, from: { x: -50, y: -50 } },
+              { label: 'UI/UX Design', value: 92, from: { x: 50, y: 50 } },
+              { label: 'Problem Solving', value: 96, from: { x: -50, y: 50 } }
+            ].map((skill, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, x: skill.from.x, y: skill.from.y, rotate: 45 }}
+                whileInView={{ opacity: 1, x: 0, y: 0, rotate: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: i * 0.1, type: "spring" }}
+                className="backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-red-500/30 transition-colors group"
+              >
+                <div className="text-4xl font-bold bg-gradient-to-r from-red-500 to-blue-500 bg-clip-text text-transparent mb-2">
+                  {skill.value}%
+                </div>
+                <div className="text-sm text-gray-400 font-medium tracking-tight uppercase">{skill.label}</div>
+                <div className="mt-3 h-1 bg-white/5 rounded-full overflow-hidden">
+                  <motion.div
+                    initial={{ width: 0 }}
+                    whileInView={{ width: `${skill.value}%` }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1.5, delay: 0.5 + (i * 0.1) }}
+                    className="h-full bg-gradient-to-r from-red-500 to-blue-500 rounded-full"
+                  />
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
   );
-}
+};
+
+export default About;

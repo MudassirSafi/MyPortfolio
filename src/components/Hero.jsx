@@ -1,99 +1,96 @@
-// src/components/Hero.jsx
-import React, { useRef, useEffect, useState } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
-import * as THREE from "three";
-import { motion } from "framer-motion";
-import { HeroHeading } from "./HeroHeading";
+import React from 'react';
+import { motion } from 'framer-motion';
+import { ChevronRight, Code2, Database, Terminal, Zap, Globe, Cpu } from 'lucide-react';
+import Typewriter from './Typewriter';
 
-function StarField({ cursor }) {
-  const pointsRef = useRef();
-  const [positions] = useState(() => {
-    const count = 2000;
-    const arr = new Float32Array(count * 3);
-    for (let i = 0; i < count * 3; i++) {
-      arr[i] = (Math.random() - 0.5) * 20;
-    }
-    return arr;
-  });
-
-  useFrame(() => {
-    if (!pointsRef.current) return;
-    const time = performance.now() * 0.0005;
-    pointsRef.current.rotation.y = time * 0.05;
-
-    // Update opacity near cursor
-    const material = pointsRef.current.material;
-    const dist = Math.sqrt(cursor.current.x ** 2 + cursor.current.y ** 2);
-    material.opacity = THREE.MathUtils.lerp(0.15, 0.9, 1 - Math.min(dist * 1.2, 1));
-  });
-
+const Hero = ({ scrollToSection, profileImage }) => {
   return (
-    <points ref={pointsRef}>
-      <bufferGeometry>
-        <bufferAttribute
-          attach="attributes-position"
-          count={positions.length / 3}
-          array={positions}
-          itemSize={3}
-        />
-      </bufferGeometry>
-      <pointsMaterial
-        size={0.04}
-        color="#0ff"
-        transparent
-        opacity={0.2}
-        sizeAttenuation
-      />
-    </points>
-  );
-}
+    <section id="hero" className="relative h-screen flex items-center justify-center overflow-hidden px-4">
+      {/* Animated Grid Background */}
+      <div className="absolute inset-0 opacity-20" style={{
+        backgroundImage: 'radial-gradient(#ffffff 1px, transparent 1px)',
+        backgroundSize: '40px 40px'
+      }}></div>
 
-export default function Hero() {
-  const containerRef = useRef(null);
-  const cursor = useRef({ x: 0, y: 0 });
+      <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center relative z-10 w-full">
+        <div className="space-y-6 text-center lg:text-left">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-red-500/10 border border-red-500/20 rounded-full text-sm text-red-500 font-medium">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+            </span>
+            Available for new opportunities
+          </div>
 
-  useEffect(() => {
-    const handleMove = (e) => {
-      const rect = containerRef.current.getBoundingClientRect();
-      cursor.current.x = ((e.clientX - rect.left) / rect.width - 0.5) * 2;
-      cursor.current.y = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
-    };
-    window.addEventListener("pointermove", handleMove);
-    return () => window.removeEventListener("pointermove", handleMove);
-  }, []);
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black leading-tight tracking-tighter">
+            <span className="text-white">SOFTWARE</span>
+            <br />
+            <span className="text-gradient">
+              <Typewriter text="ENGINEER" />
+            </span>
+          </h1>
 
-  return (
-    <section
-      id="hero"
-      ref={containerRef}
-      className="relative h-screen overflow-hidden bg-black flex flex-col items-center justify-center text-center"
-    >
-      {/* Stars background */}
-      <Canvas
-        className="absolute inset-0 z-0"
-        camera={{ position: [0, 0, 3], fov: 75 }}
-      >
-        <StarField cursor={cursor} />
-      </Canvas>
+          <p className="text-lg md:text-xl text-gray-400 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+            Full Stack Developer specializing in building <span className="text-white font-medium">high-performance</span> digital experiences with modern technologies.
+          </p>
 
-      {/* Subtle gradient overlay for depth */}
-      <div className="absolute inset-0 z-10 bg-gradient-to-b from-black/30 via-transparent to-black/70 pointer-events-none" />
+          <div className="flex flex-wrap justify-center lg:justify-start gap-4 pt-4">
+            <button
+              onClick={() => scrollToSection('projects')}
+              className="btn-primary flex items-center gap-2 px-8 py-4"
+            >
+              Explore My Work
+              <ChevronRight className="w-5 h-5" />
+            </button>
+            <button
+              onClick={() => scrollToSection('contact')}
+              className="btn-secondary flex items-center gap-2 px-8 py-4"
+            >
+              Let's Talk
+            </button>
+          </div>
+        </div>
 
-      {/* Hero content */}
-      <div className="absolute inset-0 z-50 flex flex-col items-center justify-center px-6">
-        <HeroHeading />
-        <motion.p
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
-          className="mt-4 text-lg text-cyan-200/80 backdrop-blur-md"
-        >
-          A Smooth Designer through Coding.
-        </motion.p>
+        <div className="relative flex items-center justify-center">
+          <div className="relative w-64 h-64 md:w-80 md:h-80">
+            {/* Spinning border */}
+            <div className="absolute inset-0 rounded-full border-2 border-dashed border-red-500/30 animate-[spin_20s_linear_infinite]" />
+
+            {/* Profile Wrapper */}
+            <div className="absolute inset-4 rounded-full overflow-hidden border-8 border-white/5 shadow-2xl z-20 bg-gray-900">
+              <img
+                src={profileImage}
+                alt="Mudassir Safi"
+                className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
+                onError={(e) => {
+                  e.target.style.display = 'none';
+                  e.target.parentElement.innerHTML = '<div class="w-full h-full bg-gradient-to-br from-red-500 to-blue-500 flex items-center justify-center text-7xl font-bold text-white">MS</div>';
+                }}
+              />
+            </div>
+
+            {/* Animated Floating Tech Icons */}
+            {[
+              { Icon: Code2, color: 'text-blue-400', pos: 'top-0 left-1/2 -translate-x-1/2 -translate-y-1/2', delay: '0s' },
+              { Icon: Database, color: 'text-green-400', pos: 'bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2', delay: '1s' },
+              { Icon: Terminal, color: 'text-red-400', pos: 'left-0 top-1/2 -translate-y-1/2 -translate-x-1/2', delay: '2s' },
+              { Icon: Zap, color: 'text-yellow-400', pos: 'right-0 top-1/2 -translate-y-1/2 translate-x-1/2', delay: '3s' },
+              { Icon: Globe, color: 'text-cyan-400', pos: 'top-12 right-12', delay: '1.5s' },
+              { Icon: Cpu, color: 'text-purple-400', pos: 'bottom-12 left-12', delay: '2.5s' }
+            ].map((tech, i) => (
+              <div
+                key={i}
+                className={`absolute ${tech.pos} z-30 p-3 bg-gray-900/80 backdrop-blur-md border border-white/10 rounded-2xl shadow-xl animate-float`}
+                style={{ animationDelay: tech.delay }}
+              >
+                <tech.Icon className={`w-5 h-5 ${tech.color}`} />
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
-
-      {/* Bottom fade */}
-      <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-black/90 to-transparent pointer-events-none" />
     </section>
   );
-}
+};
+
+export default Hero;

@@ -1,98 +1,93 @@
-// src/components/Navbar.jsx
-import React, { useState } from "react";
-import { motion } from "framer-motion";
+import React from 'react';
+import { Menu, X, Download } from 'lucide-react';
 
-export default function Navbar() {
-  const [open, setOpen] = useState(false);
-  const [active, setActive] = useState("About");
+const Navbar = ({
+  scrollToSection,
+  activeSection,
+  setShowCVPage,
+  isMenuOpen,
+  setIsMenuOpen,
+  profileImage
+}) => {
+  return (
+    <nav className="fixed top-0 w-full z-50 backdrop-blur-xl bg-slate-950/80 border-b border-white/5">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-20">
+          <button onClick={() => scrollToSection('hero')} className="flex items-center gap-3 cursor-pointer">
+            <div className="w-12 h-12 rounded-xl overflow-hidden border-2 border-purple-400/50">
+              <img
+                src={profileImage}
+                alt="Mudassir Safi"
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  e.target.style.display = 'none';
+                  e.target.parentElement.innerHTML = '<div class="w-full h-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center font-bold text-xl">MS</div>';
+                }}
+              />
+            </div>
+            <div className="text-left">
+              <div className="text-xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                Mudassir Safi
+              </div>
+              <div className="text-xs text-gray-400">Full Stack Developer</div>
+            </div>
+          </button>
 
-  const handleScroll = (id) => {
-  const section = document.getElementById(id.toLowerCase());
-  if (section) {
-    section.scrollIntoView({ behavior: "smooth", block: "start" });
-    setActive(id);
-    // Delay closing menu to ensure scroll works properly
-    setTimeout(() => setOpen(false), 500);
-  }
+          <div className="hidden md:flex items-center space-x-1">
+            {['Home', 'About', 'Tech Stack', 'Projects', 'Experience', 'Contact'].map((item) => (
+              <button
+                key={item}
+                onClick={() => scrollToSection(item.toLowerCase().replace(' ', '-'))}
+                className={`px-4 py-2 rounded-lg transition-all duration-300 ${activeSection === item.toLowerCase().replace(' ', '-')
+                  ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white'
+                  : 'text-gray-300 hover:text-white hover:bg-white/5'
+                  }`}
+              >
+                {item}
+              </button>
+            ))}
+            <button
+              onClick={() => setShowCVPage(true)}
+              className="ml-4 px-6 py-2 bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300 flex items-center gap-2"
+            >
+              <Download className="w-4 h-4" />
+              Resume
+            </button>
+          </div>
+
+          <button className="md:hidden p-2 text-white" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            {isMenuOpen ? <X /> : <Menu />}
+          </button>
+        </div>
+      </div>
+
+      {isMenuOpen && (
+        <div className="md:hidden backdrop-blur-xl bg-slate-950/95 border-t border-white/5">
+          <div className="px-4 pt-2 pb-3 space-y-1">
+            {['Home', 'About', 'Tech Stack', 'Projects', 'Experience', 'Contact'].map((item) => (
+              <button
+                key={item}
+                onClick={() => scrollToSection(item.toLowerCase().replace(' ', '-'))}
+                className="block w-full text-left px-4 py-3 rounded-lg text-gray-300 hover:text-white hover:bg-white/5 transition-all"
+              >
+                {item}
+              </button>
+            ))}
+            <button
+              onClick={() => {
+                setShowCVPage(true);
+                setIsMenuOpen(false);
+              }}
+              className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-red-600 to-red-700 rounded-lg text-white font-semibold"
+            >
+              <Download className="w-4 h-4" />
+              View Resume
+            </button>
+          </div>
+        </div>
+      )}
+    </nav>
+  );
 };
 
-  const navLinks = ["About", "Projects", "Experience", "Skills", "Contact"];
-
-  return (
-    <header className="fixed inset-x-0 top-0 z-50 backdrop-blur-lg bg-white/5 border-b border-cyan-400/30 shadow-[0_0_25px_rgba(0,255,255,0.25)]">
-      <nav className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        {/* Logo */}
-        <a href="/" className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-gradient-to-br from-pink-500 to-cyan-400 flex items-center justify-center text-white font-bold shadow-lg">
-            MS
-          </div>
-          <span className="text-lg font-semibold text-cyan-300 tracking-wide">
-            My Portfolio
-          </span>
-        </a>
-
-        {/* Desktop Nav */}
-        <div className="hidden md:flex items-center gap-6">
-          {navLinks.map((link) => (
-            <button
-              key={link}
-              onClick={() => handleScroll(link)}
-              className={`nav-link text-sm font-medium ${
-                active === link ? "text-cyan-300" : "text-white hover:text-cyan-400"
-              } transition`}
-            >
-              {link}
-            </button>
-          ))}
-          <a
-            href="/resume.pdf"
-            className="btn-ghost text-sm font-medium text-white hover:text-cyan-300"
-          >
-            Resume
-          </a>
-        </div>
-
-        {/* Mobile Toggle */}
-        <button
-          className="md:hidden p-2 rounded-md text-white hover:text-cyan-300 transition"
-          onClick={() => setOpen((v) => !v)}
-        >
-          <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
-            <path
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              d={
-                open ? "M6 18L18 6M6 6l12 12" : "M3 6h18M3 12h18M3 18h18"
-              }
-            />
-          </svg>
-        </button>
-      </nav>
-
-      {/* Mobile Menu */}
-      <motion.div
-        initial={{ opacity: 0, height: 0 }}
-        animate={open ? { opacity: 1, height: "auto" } : { opacity: 0, height: 0 }}
-        className="md:hidden overflow-hidden bg-white/10 backdrop-blur-xl border-t border-cyan-400/20"
-      >
-        <div className="px-6 py-4 flex flex-col gap-3">
-          {navLinks.map((link) => (
-            <button
-              key={link}
-              onClick={() => handleScroll(link)}
-              className={`nav-link text-left text-sm font-medium ${
-                active === link ? "text-cyan-300" : "text-white hover:text-cyan-400"
-              }`}
-            >
-              {link}
-            </button>
-          ))}
-          <a href="/resume.pdf" className="btn-ghost text-sm font-medium text-white hover:text-cyan-300">
-            Resume
-          </a>
-        </div>
-      </motion.div>
-    </header>
-  );
-}
+export default Navbar;

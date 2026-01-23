@@ -1,215 +1,181 @@
-import React, { useEffect, useRef, useState } from "react";
-import "../styles/neonTheme.css"; // same theme file used in About.jsx
+import React, { useRef, useState } from 'react';
+import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
+import { Rocket, Eye, ExternalLink, Star, X } from 'lucide-react';
 
-// --- Data for your projects
-const projects = [
-  {
-    id: 1,
-    title: "Aurora Notes",
-    img: "https://picsum.photos/seed/p1/1200/800",
-    github: "https://github.com/MudassirSafi/JewelRolins",
-    live: "https://jewel-rolin.netlify.app/",
-  },
-  {
-    id: 2,
-    title: "Neon Chat UI",
-    img: "https://picsum.photos/seed/p2/1200/800",
-    github: "https://github.com/MudassirSafi/JewelRolins",
-    live: "https://jewel-rolin.netlify.app/",
-  },
-  {
-    id: 3,
-    title: "Stellar Dashboard",
-    img: "https://picsum.photos/seed/p3/1200/800",
-    github: "https://github.com/MudassirSafi/JewelRolins",
-    live: "https://jewel-rolin.netlify.app/",
-  },
-  {
-    id: 4,
-    title: "Lumen Storefront",
-    img: "https://picsum.photos/seed/p4/1200/800",
-    github: "https://github.com/MudassirSafi/JewelRolins",
-    live: "https://jewel-rolin.netlify.app/",
-  },
-  {
-    id: 5,
-    title: "Orbit Blog",
-    img: "https://picsum.photos/seed/p5/1200/800",
-    github: "https://github.com/MudassirSafi/JewelRolins",
-    live: "https://jewel-rolin.netlify.app/",
-  },
-  {
-    id: 6,
-    title: "Prism Planner",
-    img: "https://picsum.photos/seed/p6/1200/800",
-    github: "https://github.com/MudassirSafi/JewelRolins",
-    live: "https://jewel-rolin.netlify.app/",
-  },
-];
+const Projects = () => {
+  const [selectedProject, setSelectedProject] = useState(null);
+  const targetRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: targetRef,
+  });
 
-// --- Hook to detect scroll direction
-function useScrollDirection() {
-  const [direction, setDirection] = useState("down");
-  const lastY = useRef(window.scrollY);
+  const xRaw = useTransform(scrollYProgress, [0, 1], ["0%", "-75%"]);
+  const x = useSpring(xRaw, { stiffness: 50, damping: 20, restDelta: 0.001 });
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentY = window.scrollY;
-      if (Math.abs(currentY - lastY.current) > 5) {
-        setDirection(currentY > lastY.current ? "down" : "up");
-        lastY.current = currentY;
-      }
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  return direction;
-}
-
-// --- Project Card Component
-function ProjectCard({ project, scrollDir }) {
-  const ref = useRef();
-  const [open, setOpen] = useState(false);
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => setVisible(entry.isIntersecting),
-      { threshold: 0.35 }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    if (!visible) setOpen(false);
-    else setOpen(scrollDir === "down");
-  }, [visible, scrollDir]);
+  const projects = [
+    {
+      title: "BizzRolin Software House",
+      description: "A premium software house platform featuring automated project management, client portals, and dynamic service showcases. Built for high-performance agencies.",
+      tech: ["Next.js", "Tailwind CSS", "Framer Motion", "Node.js"],
+      gradient: "from-blue-600 to-indigo-700",
+      stats: { projects: "20+", clients: "15+", uptime: "99.9%" }
+    },
+    {
+      title: "SME Dashboard",
+      description: "Comprehensive business management dashboard for SMEs with real-time analytics, inventory tracking, and financial reporting.",
+      tech: ["React", "Express", "MongoDB", "Chart.js"],
+      gradient: "from-red-600 to-red-400",
+      stats: { users: "1.2K+", uptime: "99.9%", status: "Live" }
+    },
+    {
+      title: "2Wolf E-commerce",
+      description: "Premium e-commerce platform with seamless shopping experience, secure payments, and dynamic product management.",
+      tech: ["Next.js", "Tailwind CSS", "Stripe", "Node.js"],
+      gradient: "from-gray-900 to-gray-700",
+      stats: { sales: "5K+", rating: "4.9/5", speed: "98/100" }
+    },
+    {
+      title: "CyberPulse Security",
+      description: "Real-time threat monitoring dashboard with AI-driven anomaly detection and interactive vulnerability reports.",
+      tech: ["React", "Python", "TensorFlow", "WebSocket"],
+      gradient: "from-cyan-600 to-blue-500",
+      stats: { threats: "10K+", scans: "500+", score: "99/100" }
+    },
+    {
+      title: "CloudFlow DevOps",
+      description: "A comprehensive CI/CD pipeline visualizer and infrastructure management tool for modern cloud deployments.",
+      tech: ["Go", "React", "Docker", "Kubernetes"],
+      gradient: "from-orange-600 to-red-500",
+      stats: { builds: "1K+", deploys: "200+", latency: "<50ms" }
+    }
+  ];
 
   return (
-    <div ref={ref} className="project-card w-full max-w-4xl mx-auto mb-12 px-4">
-      <div
-        className={`rounded-3xl overflow-hidden border border-[var(--neon-border)] bg-[var(--glass-bg)] backdrop-blur-xl shadow-[var(--neon-card-shadow)] transition-transform duration-700 ease-[cubic-bezier(.2,.9,.2,1)] hover:animate-neonPulse ${
-          open ? "rotate-x-0" : "rotate-x-80"
-        }`}
-      >
-        {/* Image Section */}
-        <div className="h-60 sm:h-72 w-full overflow-hidden transform-origin-top transition-transform">
-          <img
-            src={project.img}
-            alt={project.title}
-            className="w-full h-full object-cover opacity-90 hover:scale-105 transition-transform duration-500"
-            draggable={false}
-          />
-        </div>
-
-        {/* Text Section */}
-        <div className="p-6 flex flex-col gap-4">
-          <h3
-            className="text-2xl font-semibold drop-shadow-[0_0_10px_var(--neon-primary)]"
-            style={{ color: "var(--neon-primary)" }}
+    <>
+      <AnimatePresence>
+        {selectedProject && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8 backdrop-blur-2xl bg-black/80"
+            onClick={() => setSelectedProject(null)}
           >
-            {project.title}
-          </h3>
-          <p className="text-gray-300 text-sm sm:text-base">
-            Explore the full build & live version of this project 👇
-          </p>
+            <motion.div
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.9, y: 20 }}
+              className="relative w-full max-w-4xl glass-card overflow-hidden"
+              onClick={e => e.stopPropagation()}
+            >
+              <button
+                onClick={() => setSelectedProject(null)}
+                className="absolute top-6 right-6 p-2 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition-all z-10"
+              >
+                <X className="w-6 h-6 text-white" />
+              </button>
 
-          {/* Buttons */}
-          <div className="flex gap-4 mt-2 flex-wrap">
-            <a
-              href={project.github}
-              target="_blank"
-              rel="noreferrer"
-              className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-white bg-gradient-to-r from-[var(--neon-primary)] to-[var(--neon-accent)] hover:opacity-90 transition-all duration-300 shadow-[0_0_15px_var(--neon-accent)]"
-            >
-              <i className="fa-brands fa-github text-lg"></i> GitHub
-            </a>
-            <a
-              href={project.live}
-              target="_blank"
-              rel="noreferrer"
-              className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-white bg-gradient-to-r from-[var(--neon-accent)] to-[var(--neon-primary)] hover:opacity-90 transition-all duration-300 shadow-[0_0_15px_var(--neon-primary)]"
-            >
-              <i className="fa-solid fa-globe text-lg"></i> Live Demo
-            </a>
+              <div className="grid md:grid-cols-2">
+                <div className={`h-64 md:h-auto bg-gradient-to-br ${selectedProject.gradient} flex items-center justify-center p-12`}>
+                  <Rocket className="w-32 h-32 text-white/20 animate-pulse" />
+                </div>
+                <div className="p-8 md:p-12 space-y-6">
+                  <h3 className="text-4xl font-black font-display uppercase">{selectedProject.title}</h3>
+                  <p className="text-lg text-gray-400 leading-relaxed">{selectedProject.description}</p>
+
+                  <div className="space-y-4">
+                    <h4 className="text-sm font-bold text-red-500 uppercase tracking-widest">Technologies Used</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {selectedProject.tech.map((tech, i) => (
+                        <span key={i} className="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-sm font-medium">
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-3 gap-4 py-6 border-y border-white/5">
+                    {Object.entries(selectedProject.stats).map(([key, value]) => (
+                      <div key={key}>
+                        <div className="text-xl font-bold text-white">{value}</div>
+                        <div className="text-xs text-gray-500 uppercase">{key}</div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <button className="w-full btn-primary flex items-center justify-center gap-2">
+                    <ExternalLink className="w-5 h-5" />
+                    Visit Live Site
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <section ref={targetRef} id="projects" className="relative h-[300vh] bg-[#0a0a0f]">
+        <div className="sticky top-0 h-screen flex items-center overflow-hidden">
+          <div className="absolute top-24 left-0 right-0 text-center px-4">
+            <h2 className="text-4xl md:text-6xl font-black font-display text-white uppercase tracking-tighter">
+              Featured <span className="text-gradient">Projects</span>
+            </h2>
           </div>
+
+          <motion.div style={{ x }} className="flex gap-8 px-12 md:px-24">
+            {projects.map((project, index) => (
+              <div
+                key={index}
+                className="group relative w-[350px] md:w-[500px] flex-shrink-0"
+                onClick={() => setSelectedProject(project)}
+              >
+                <div className="glass-card overflow-hidden cursor-pointer h-full">
+                  <div className={`h-48 md:h-64 bg-gradient-to-br ${project.gradient} relative overflow-hidden`}>
+                    <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-all duration-500" />
+                    <div className="absolute inset-0 flex items-center justify-center transform group-hover:scale-110 transition-transform duration-700">
+                      <Rocket className="w-20 h-20 text-white/20" />
+                    </div>
+                    <div className="absolute bottom-4 right-4 translate-y-12 group-hover:translate-y-0 transition-all duration-300">
+                      <div className="bg-white text-black px-4 py-2 rounded-full text-sm font-bold flex items-center gap-2">
+                        <Eye className="w-4 h-4" /> View Details
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="p-8 space-y-4">
+                    <h3 className="text-2xl font-black font-display uppercase group-hover:text-red-500 transition-colors">
+                      {project.title}
+                    </h3>
+                    <p className="text-gray-400 line-clamp-2 leading-relaxed">
+                      {project.description}
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {project.tech.slice(0, 3).map((tech, i) => (
+                        <span key={i} className="text-xs font-bold text-gray-500 uppercase tracking-widest">
+                          #{tech}
+                        </span>
+                      ))}
+                      {project.tech.length > 3 && (
+                        <span className="text-xs font-bold text-red-500/50 uppercase tracking-widest">
+                          +{project.tech.length - 3}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+
+            <div className="w-[300px] flex-shrink-0 flex flex-col justify-center items-center text-center p-12 glass-card border-dashed">
+              <Star className="w-12 h-12 text-red-500 mb-4 animate-pulse" />
+              <h3 className="text-2xl font-black uppercase mb-2">More Coming Soon</h3>
+              <p className="text-gray-500 text-sm italic">Always building, always learning</p>
+            </div>
+          </motion.div>
         </div>
-      </div>
-    </div>
+      </section>
+    </>
   );
-}
+};
 
-// --- Projects Section
-export default function Projects() {
-  const scrollDir = useScrollDirection();
-
-  useEffect(() => {
-    const style = document.createElement("style");
-    style.innerHTML = `
-      @keyframes rotateNeon {
-        from { transform: rotate(0deg); }
-        to { transform: rotate(360deg); }
-      }
-      @keyframes neonPulse {
-        0%, 100% {
-          box-shadow: 0 0 25px var(--neon-primary),
-                      0 0 50px var(--neon-accent);
-          border-color: var(--neon-border);
-        }
-        50% {
-          box-shadow: 0 0 40px var(--neon-accent),
-                      0 0 70px var(--neon-primary);
-          border-color: var(--neon-accent);
-        }
-      }
-      .animate-neonPulse {
-        animation: neonPulse 2.8s ease-in-out infinite alternate;
-      }
-      .rotate-x-80 {
-        transform: perspective(1000px) rotateX(-80deg) translateY(30px);
-      }
-      .rotate-x-0 {
-        transform: perspective(1000px) rotateX(0deg) translateY(0);
-      }
-      .neon-bg {
-        position: fixed;
-        inset: 0;
-        background: radial-gradient(circle at 20% 30%, rgba(255,0,150,0.08), transparent 30%),
-                    radial-gradient(circle at 80% 70%, rgba(0,200,255,0.08), transparent 25%);
-        animation: rotateNeon 25s linear infinite;
-        z-index: -10;
-        filter: blur(100px);
-      }
-    `;
-    document.head.appendChild(style);
-    return () => style.remove();
-  }, []);
-
-  return (
-    <section id="projects" className="relative py-24 overflow-hidden">
-      <div className="neon-bg" aria-hidden="true"></div>
-
-      {/* Glassy Heading */}
-      <div className="max-w-6xl mx-auto text-center mb-16 px-4 glass-card border border-[var(--neon-border)] shadow-[var(--neon-card-shadow)] rounded-3xl py-8 backdrop-blur-xl">
-        <h2
-          className="text-4xl sm:text-5xl font-bold mb-3 drop-shadow-[0_0_15px_var(--neon-primary)]"
-          style={{ color: "var(--neon-primary)" }}
-        >
-          My Projects
-        </h2>
-        <p className="text-gray-300 text-sm sm:text-base">
-          Scroll to see — each card opens like a laptop lid 🎨
-        </p>
-      </div>
-
-      {/* Cards */}
-      <div className="flex flex-col items-center gap-10">
-        {projects.map((p) => (
-          <ProjectCard key={p.id} project={p} scrollDir={scrollDir} />
-        ))}
-      </div>
-    </section>
-  );
-}
+export default Projects;

@@ -1,113 +1,95 @@
-// src/components/Contact.jsx
-import React, { useState } from "react";
-import { motion } from "framer-motion";
-import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
+import React from 'react';
+import { motion } from 'framer-motion';
+import { Mail, Github, Linkedin } from 'lucide-react';
 
-export default function Contact() {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  // --- Simple email sending through mailto ---
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const mailtoLink = `mailto:muhammedmudassir@gmail.com?subject=Message from ${formData.name}&body=${formData.message}%0A%0AFrom: ${formData.email}`;
-    window.location.href = mailtoLink;
-  };
-
+const Contact = ({ scrollToSection }) => {
   return (
-    <section
-      id="contact"
-      className="relative py-20 px-6 text-center bg-gradient-to-br from-black/60 to-neutral-900 backdrop-blur-md"
-    >
-      <motion.h2
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="text-4xl font-bold mb-10 text-cyan-300 drop-shadow-[0_0_15px_rgba(0,255,255,0.3)]"
-      >
-        Get in Touch
-      </motion.h2>
+    <section id="contact" className="py-32 px-4 relative overflow-hidden">
+      <div className="max-w-4xl mx-auto text-center">
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-5xl md:text-7xl font-black mb-8 uppercase tracking-tighter"
+        >
+          Build <span className="text-gradient">Impact</span>
+        </motion.h2>
+        <p className="text-xl text-gray-400 mb-12 max-w-2xl mx-auto font-medium">
+          Have a project in mind? I'm available for freelance work and always excited to collaborate on <span className="text-white">innovative ideas</span>.
+        </p>
 
-      <motion.form
-        onSubmit={handleSubmit}
-        initial={{ opacity: 0, scale: 0.9 }}
-        whileInView={{ opacity: 1, scale: 1 }}
-        viewport={{ once: true }}
-        className="max-w-lg mx-auto glassy-bg rounded-2xl p-8 shadow-[0_0_40px_rgba(0,255,255,0.2)] border border-cyan-400/20"
-      >
-        <div className="mb-4">
-          <input
-            type="text"
-            name="name"
-            placeholder="Your Name"
-            required
-            onChange={handleChange}
-            className="w-full p-3 bg-white/10 border border-cyan-400/30 rounded-md text-white placeholder-gray-400 focus:outline-none focus:border-cyan-300"
-          />
+        <div className="flex flex-wrap gap-6 justify-center mb-16">
+          <motion.a
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            href="mailto:muhammedmudassir40@gmail.com"
+            className="btn-primary flex items-center gap-3 px-10 py-5"
+          >
+            <Mail className="w-5 h-5" />
+            Email Me
+          </motion.a>
+          <motion.a
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            href="https://github.com/MudassirSafi"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-secondary flex items-center gap-3 px-10 py-5"
+          >
+            <Github className="w-5 h-5" />
+            GitHub
+          </motion.a>
+          <motion.a
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            href="https://www.linkedin.com/in/muhammad-mudassir-843964272/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-secondary flex items-center gap-3 px-10 py-5"
+          >
+            <Linkedin className="w-5 h-5" />
+            LinkedIn
+          </motion.a>
         </div>
 
-        <div className="mb-4">
-          <input
-            type="email"
-            name="email"
-            placeholder="Your Email"
-            required
-            onChange={handleChange}
-            className="w-full p-3 bg-white/10 border border-cyan-400/30 rounded-md text-white placeholder-gray-400 focus:outline-none focus:border-cyan-300"
-          />
-        </div>
-
-        <div className="mb-6">
-          <textarea
-            name="message"
-            rows="5"
-            placeholder="Your Message"
-            required
-            onChange={handleChange}
-            className="w-full p-3 bg-white/10 border border-cyan-400/30 rounded-md text-white placeholder-gray-400 focus:outline-none focus:border-cyan-300"
-          ></textarea>
-        </div>
-
-        <button
-          type="submit"
-          className="w-full py-3 rounded-md bg-cyan-500 hover:bg-cyan-400 text-white font-semibold shadow-[0_0_15px_rgba(0,255,255,0.4)] transition-all"
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="glass-card p-12 text-left"
         >
-          Send Message
-        </button>
-      </motion.form>
-
-      {/* Social Icons */}
-      <div className="mt-10 flex justify-center gap-6 text-3xl">
-        <a
-          href="https://github.com/MudassirSafi/MyPortfolio"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-white hover:text-cyan-300 transition"
-        >
-          <FaGithub />
-        </a>
-        <a
-          href="https://www.linkedin.com/in/muhammad-mudassir-843964272/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-white hover:text-cyan-300 transition"
-        >
-          <FaLinkedin />
-        </a>
-        <a
-          href="mailto:muhammedmudassir@gmail.com"
-          className="text-white hover:text-cyan-300 transition"
-        >
-          <FaEnvelope />
-        </a>
+          <h3 className="text-3xl font-black font-display uppercase mb-8">Start a Conversation</h3>
+          <div className="space-y-6">
+            <div className="grid md:grid-cols-2 gap-6">
+              <input
+                type="text"
+                placeholder="Your Name"
+                className="px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-red-500 transition-colors"
+              />
+              <input
+                type="email"
+                placeholder="Your Email"
+                className="px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-red-500 transition-colors"
+              />
+            </div>
+            <input
+              type="text"
+              placeholder="Project Budget (USD)"
+              className="w-full px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-red-500 transition-colors"
+            />
+            <textarea
+              rows={5}
+              placeholder="Tell me about your project..."
+              className="w-full px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-red-500 transition-colors resize-none"
+            />
+            <button className="w-full btn-primary py-5 text-lg">
+              Send Message
+            </button>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
-}
+};
+
+export default Contact;
