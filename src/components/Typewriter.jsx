@@ -20,8 +20,8 @@ const Typewriter = ({ text, delay = 0 }) => {
     }, [currentIndex, delay, text]);
 
     return (
-        <span className="relative inline-block">
-            <span className="text-white">{displayText}</span>
+        <>
+            {displayText}
             {!isComplete && (
                 <motion.span
                     animate={{ opacity: [1, 0, 1] }}
@@ -29,7 +29,7 @@ const Typewriter = ({ text, delay = 0 }) => {
                     className="inline-block w-[4px] h-[0.85em] bg-red-500 ml-1 translate-y-1"
                 />
             )}
-        </span>
+        </>
     );
 };
 
