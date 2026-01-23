@@ -23,9 +23,13 @@ const Hero = ({ scrollToSection, profileImage }) => {
           </div>
 
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-black leading-tight tracking-tighter">
-            <span className="block bg-gradient-to-r from-red-500 via-purple-500 to-blue-500 bg-clip-text text-transparent">
-              <Typewriter text="SOFTWARE ENGINEER" delay={0} />
+            <span className="block text-white mb-2">
+              SOFTWARE
             </span>
+            <Typewriter
+              text="ENGINEER"
+              className="block bg-gradient-to-r from-red-500 via-purple-500 to-blue-500 bg-clip-text text-transparent"
+            />
           </h1>
 
           <p className="text-lg md:text-xl text-gray-400 max-w-xl mx-auto lg:mx-0 leading-relaxed">
