@@ -44,7 +44,7 @@ const About = () => {
             </div>
           </motion.div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {[
               { label: 'Code Quality', value: 98, from: { x: 50, y: -50 } },
               { label: 'Performance', value: 95, from: { x: -50, y: -50 } },

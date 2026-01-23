@@ -34,7 +34,7 @@ const Experience = () => {
           Professional <span className="text-gradient">Experience</span>
         </motion.h2>
 
-        <div className="relative border-l-2 border-white/5 ml-4 md:ml-0 md:pl-12 space-y-12">
+        <div className="relative border-l-2 border-white/5 ml-2 sm:ml-4 md:ml-0 md:pl-12 space-y-12">
           {experience.map((exp, index) => (
             <motion.div
               key={index}

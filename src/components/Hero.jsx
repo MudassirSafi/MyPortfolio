@@ -22,7 +22,7 @@ const Hero = ({ scrollToSection, profileImage, isLoaded }) => {
             Available for new opportunities
           </div>
 
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-black leading-tight tracking-tighter min-h-[1.26em]">
+          <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-black leading-tight tracking-tighter min-h-[1.26em]">
             <Typewriter
               start={isLoaded}
               loop={true}

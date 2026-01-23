@@ -56,7 +56,7 @@ const Contact = ({ scrollToSection }) => {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="glass-card p-12 text-left"
+          className="glass-card p-6 sm:p-12 text-left"
         >
           <h3 className="text-3xl font-black font-display uppercase mb-8">Start a Conversation</h3>
           <div className="space-y-6">
