@@ -16,39 +16,46 @@ const Projects = () => {
 
   const projects = [
     {
+      title: "Smart Drs",
+      description: "Smart AI-based learning and doctor-patient consultancy platform. Features intelligent scheduling, real-time consultation, and AI-driven health insights.",
+      tech: ["React", "AI", "Vector DB", "Embedding"],
+      gradient: "from-emerald-600 to-teal-500",
+      stats: { users: "Coming Soon", accuracy: "99%", status: "In Dev" },
+      link: "#", // Dummy link as requested
+      image: "/SmartDrs.png"
+    },
+    {
+      title: "BudVizion",
+      description: "A real-time streaming web application platform. Production-ready architecture for seamless live broadcasting and viewer engagement.",
+      tech: ["React", "Node.js", "WebRTC", "SQL"],
+      gradient: "from-purple-600 to-pink-500",
+      stats: { uptime: "99.99%", latency: "<50ms", quality: "4K" },
+      link: "https://budvizion.com/",
+      image: "/BudVizion.png"
+    },
+    {
       title: "BizzRolin Software House",
       description: "A premium software house platform featuring automated project management, client portals, and dynamic service showcases. Built for high-performance agencies.",
       tech: ["Next.js", "Tailwind CSS", "Framer Motion", "Node.js"],
       gradient: "from-blue-600 to-indigo-700",
-      stats: { projects: "20+", clients: "15+", uptime: "99.9%" }
+      stats: { projects: "20+", clients: "15+", uptime: "99.9%" },
+      image: "/bizrolin.png"
     },
     {
       title: "SME Dashboard",
       description: "Comprehensive business management dashboard for SMEs with real-time analytics, inventory tracking, and financial reporting.",
       tech: ["React", "Express", "MongoDB", "Chart.js"],
       gradient: "from-red-600 to-red-400",
-      stats: { users: "1.2K+", uptime: "99.9%", status: "Live" }
+      stats: { users: "1.2K+", uptime: "99.9%", status: "Live" },
+      image: "/SME dashboard.png"
     },
     {
       title: "2Wolf E-commerce",
       description: "Premium e-commerce platform with seamless shopping experience, secure payments, and dynamic product management.",
       tech: ["Next.js", "Tailwind CSS", "Stripe", "Node.js"],
       gradient: "from-gray-900 to-gray-700",
-      stats: { sales: "5K+", rating: "4.9/5", speed: "98/100" }
-    },
-    {
-      title: "CyberPulse Security",
-      description: "Real-time threat monitoring dashboard with AI-driven anomaly detection and interactive vulnerability reports.",
-      tech: ["React", "Python", "TensorFlow", "WebSocket"],
-      gradient: "from-cyan-600 to-blue-500",
-      stats: { threats: "10K+", scans: "500+", score: "99/100" }
-    },
-    {
-      title: "CloudFlow DevOps",
-      description: "A comprehensive CI/CD pipeline visualizer and infrastructure management tool for modern cloud deployments.",
-      tech: ["Go", "React", "Docker", "Kubernetes"],
-      gradient: "from-orange-600 to-red-500",
-      stats: { builds: "1K+", deploys: "200+", latency: "<50ms" }
+      stats: { sales: "5K+", rating: "4.9/5", speed: "98/100" },
+      image: "/2wolff.png"
     }
   ];
 
@@ -78,8 +85,16 @@ const Projects = () => {
               </button>
 
               <div className="grid lg:grid-cols-2">
-                <div className={`h-48 sm:h-64 lg:h-auto bg-gradient-to-br ${selectedProject.gradient} flex items-center justify-center p-8 md:p-12`}>
-                  <Rocket className="w-24 h-24 sm:w-32 sm:h-32 text-white/20 animate-pulse" />
+                <div className={`h-48 sm:h-64 lg:h-auto bg-gradient-to-br ${selectedProject.gradient} flex items-center justify-center p-8 md:p-12 relative overflow-hidden`}>
+                  {selectedProject.image ? (
+                    <img
+                      src={selectedProject.image}
+                      alt={selectedProject.title}
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                  ) : (
+                    <Rocket className="w-24 h-24 sm:w-32 sm:h-32 text-white/20 animate-pulse" />
+                  )}
                 </div>
                 <div className="p-6 sm:p-8 md:p-12 space-y-4 md:space-y-6 max-h-[70vh] lg:max-h-none overflow-y-auto lg:overflow-visible">
                   <h3 className="text-3xl md:text-5xl font-black font-display uppercase leading-tight">{selectedProject.title}</h3>
@@ -106,10 +121,15 @@ const Projects = () => {
                   </div>
 
                   <div className="flex flex-col sm:flex-row gap-4">
-                    <button className="flex-1 btn-primary flex items-center justify-center gap-2 py-4">
+                    <a
+                      href={selectedProject.link || "https://www.bizrolin.com/"}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 btn-primary flex items-center justify-center gap-2 py-4"
+                    >
                       <ExternalLink className="w-5 h-5" />
                       Live Demo
-                    </button>
+                    </a>
                     <button className="flex-1 btn-secondary flex items-center justify-center gap-2 py-4">
                       GitHub Repo
                     </button>
@@ -154,10 +174,20 @@ const Projects = () => {
               >
                 <div className="glass-card overflow-hidden cursor-pointer h-full border-white/5 hover:border-red-500/30 transition-all duration-500 group-hover:shadow-[0_0_50px_rgba(255,59,48,0.15)]">
                   <div className={`h-40 sm:h-56 md:h-80 bg-gradient-to-br ${project.gradient} relative overflow-hidden`}>
-                    <div className="absolute inset-0 bg-black/30 group-hover:bg-transparent transition-all duration-700" />
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <Rocket className="w-16 h-16 sm:w-24 sm:h-24 text-white/10 group-hover:scale-125 group-hover:rotate-12 transition-all duration-700" />
-                    </div>
+                    {project.image ? (
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-700"
+                      />
+                    ) : (
+                      <>
+                        <div className="absolute inset-0 bg-black/30 group-hover:bg-transparent transition-all duration-700" />
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <Rocket className="w-16 h-16 sm:w-24 sm:h-24 text-white/10 group-hover:scale-125 group-hover:rotate-12 transition-all duration-700" />
+                        </div>
+                      </>
+                    )}
 
                     {/* Floating Tech Tag */}
                     <div className="absolute top-6 left-6 flex gap-2">

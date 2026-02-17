@@ -1,5 +1,28 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useEffect, useRef } from 'react';
+import { motion, useInView, animate } from 'framer-motion';
+
+const Counter = ({ value }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
+
+  useEffect(() => {
+    if (isInView) {
+      const controls = animate(0, value, {
+        duration: 2,
+        repeat: Infinity,
+        repeatDelay: 3,
+        onUpdate: (latest) => {
+          if (ref.current) {
+            ref.current.textContent = Math.floor(latest) + "%";
+          }
+        }
+      });
+      return () => controls.stop();
+    }
+  }, [isInView, value]);
+
+  return <span ref={ref} />;
+};
 
 const About = () => {
   return (
@@ -60,7 +83,7 @@ const About = () => {
                 className="backdrop-blur-md bg-white/5 border border-white/10 rounded-2xl p-6 hover:border-red-500/30 transition-colors group"
               >
                 <div className="text-4xl font-bold bg-gradient-to-r from-red-500 to-blue-500 bg-clip-text text-transparent mb-2">
-                  {skill.value}%
+                  <Counter value={skill.value} />
                 </div>
                 <div className="text-sm text-gray-400 font-medium tracking-tight uppercase">{skill.label}</div>
                 <div className="mt-3 h-1 bg-white/5 rounded-full overflow-hidden">

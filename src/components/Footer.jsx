@@ -59,7 +59,7 @@ const Footer = ({ profileImage }) => {
                                 <Github className="w-5 h-5" />
                             </a>
                             <a
-                                href="https://www.linkedin.com/in/muhammad-mudassir-843964272/"
+                                href="https://www.linkedin.com/in/muhammad-mudassir5/"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-red-500/30 transition-all"

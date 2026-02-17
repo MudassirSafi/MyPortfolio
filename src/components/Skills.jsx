@@ -6,6 +6,7 @@ export default function Skills() {
   const skills = [
     "HTML", "CSS", "JavaScript", "React", "Tailwind CSS",
     "Node.js", "Express", "MongoDB", "Git", "Framer Motion", "Three.js",
+    "Vector", "Embedding", "Sql",
   ];
 
   return (

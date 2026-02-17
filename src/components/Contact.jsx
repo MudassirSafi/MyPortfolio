@@ -42,7 +42,7 @@ const Contact = ({ scrollToSection }) => {
           <motion.a
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            href="https://www.linkedin.com/in/muhammad-mudassir-843964272/"
+            href="https://www.linkedin.com/in/muhammad-mudassir5/"
             target="_blank"
             rel="noopener noreferrer"
             className="btn-secondary flex items-center gap-3 px-10 py-5"
@@ -82,7 +82,17 @@ const Contact = ({ scrollToSection }) => {
               placeholder="Tell me about your project..."
               className="w-full px-6 py-4 bg-white/5 border border-white/10 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-red-500 transition-colors resize-none"
             />
-            <button className="w-full btn-primary py-5 text-lg">
+            <button
+              onClick={() => {
+                const name = document.querySelector('input[placeholder="Your Name"]').value;
+                const email = document.querySelector('input[placeholder="Your Email"]').value;
+                const budget = document.querySelector('input[placeholder="Project Budget (USD)"]').value;
+                const message = document.querySelector('textarea[placeholder="Tell me about your project..."]').value;
+
+                window.location.href = `mailto:muhammedmudassir40@gmail.com?subject=Project Inquiry from ${name}&body=Name: ${name}%0D%0AEmail: ${email}%0D%0ABudget: ${budget}%0D%0A%0D%0AMessage:%0D%0A${message}`;
+              }}
+              className="w-full btn-primary py-5 text-lg"
+            >
               Send Message
             </button>
           </div>
