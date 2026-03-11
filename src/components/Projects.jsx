@@ -1,28 +1,38 @@
-import React, { useRef, useState } from 'react';
-import { motion, useScroll, useTransform, useSpring, AnimatePresence } from 'framer-motion';
-import { Rocket, Eye, ExternalLink, Star, X } from 'lucide-react';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Rocket, Eye, ExternalLink, Star, X, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const Projects = () => {
   const [selectedProject, setSelectedProject] = useState(null);
-  const targetRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: targetRef,
-  });
-
-  // Smoother, slower scroll with adjusted physics
-  const xRaw = useTransform(scrollYProgress, [0, 1], ["1%", "-80%"]);
-  // Reduced stiffness and increased damping for a premium "heavy" feel
-  const x = useSpring(xRaw, { stiffness: 25, damping: 35, restDelta: 0.001 });
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const projects = [
     {
-      title: "Smart Drs",
+      title: "Quant-Aeonix",
+      description: "A premium software company providing top-tier IT services and digital solutions. Specializing in scalable architectures, modern web technologies, and client-centric software development.",
+      tech: ["React", "Node.js", "Cloud", "IT Services"],
+      gradient: "from-blue-700 to-indigo-600",
+      stats: { status: "Live", projects: "50+", rating: "5.0/5" },
+      link: "https://quantaeonix.com",
+      image: "/aeonix.png"
+    },
+    {
+      title: "Medoryx",
       description: "Smart AI-based learning and doctor-patient consultancy platform. Features intelligent scheduling, real-time consultation, and AI-driven health insights.",
       tech: ["React", "AI", "Vector DB", "Embedding"],
       gradient: "from-emerald-600 to-teal-500",
       stats: { users: "Coming Soon", accuracy: "99%", status: "In Dev" },
-      link: "#", // Dummy link as requested
-      image: "/SmartDrs.png"
+      link: "#",
+      image: "/medoryxproject.png"
+    },
+    {
+      title: "Smart-echo",
+      description: "Advanced Admin Panel for Smart Waste Management System. Streamlining urban waste collection through real-time monitoring and data-driven insights.",
+      tech: ["React", "Admin Panel", "Dashboard", "SaaS"],
+      gradient: "from-orange-600 to-red-500",
+      stats: { status: "Placeholder", type: "Admin", field: "IoT/Waste" },
+      link: "#",
+      image: "/smartecho.png"
     },
     {
       title: "BudVizion",
@@ -34,30 +44,40 @@ const Projects = () => {
       image: "/BudVizion.png"
     },
     {
-      title: "BizzRolin Software House",
-      description: "A premium software house platform featuring automated project management, client portals, and dynamic service showcases. Built for high-performance agencies.",
-      tech: ["Next.js", "Tailwind CSS", "Framer Motion", "Node.js"],
-      gradient: "from-blue-600 to-indigo-700",
-      stats: { projects: "20+", clients: "15+", uptime: "99.9%" },
-      image: "/bizrolin.png"
-    },
-    {
-      title: "SME Dashboard",
-      description: "Comprehensive business management dashboard for SMEs with real-time analytics, inventory tracking, and financial reporting.",
-      tech: ["React", "Express", "MongoDB", "Chart.js"],
-      gradient: "from-red-600 to-red-400",
-      stats: { users: "1.2K+", uptime: "99.9%", status: "Live" },
-      image: "/SME dashboard.png"
-    },
-    {
       title: "2Wolf E-commerce",
       description: "Premium e-commerce platform with seamless shopping experience, secure payments, and dynamic product management.",
       tech: ["Next.js", "Tailwind CSS", "Stripe", "Node.js"],
       gradient: "from-gray-900 to-gray-700",
       stats: { sales: "5K+", rating: "4.9/5", speed: "98/100" },
       image: "/2wolff.png"
+    },
+    {
+      title: "SME Dashboard",
+      description: "Comprehensive business dashboard for small and medium enterprises. Real-time analytics, financial tracking, and performance insights all in one place.",
+      tech: ["React", "Node.js", "MongoDB", "Chart.js"],
+      gradient: "from-cyan-600 to-blue-500",
+      stats: { modules: "12+", reports: "Real-time", status: "Live" },
+      link: "#",
+      image: "/SME dashboard.png"
+    },
+    {
+      title: "Bizrolin",
+      description: "Professional business solutions platform providing modern digital services. Clean architecture with scalable infrastructure and intuitive user interfaces.",
+      tech: ["React", "Tailwind CSS", "Node.js", "Express"],
+      gradient: "from-amber-600 to-yellow-500",
+      stats: { clients: "20+", uptime: "99.9%", status: "Live" },
+      link: "#",
+      image: "/bizrolin.png"
     }
   ];
+
+  const nextProject = () => {
+    setCurrentIndex((prev) => (prev + 1) % projects.length);
+  };
+
+  const prevProject = () => {
+    setCurrentIndex((prev) => (prev - 1 + projects.length) % projects.length);
+  };
 
   return (
     <>
@@ -122,10 +142,10 @@ const Projects = () => {
 
                   <div className="flex flex-col sm:flex-row gap-4">
                     <a
-                      href={selectedProject.link || "https://www.bizrolin.com/"}
+                      href={selectedProject.link === "#" ? undefined : selectedProject.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex-1 btn-primary flex items-center justify-center gap-2 py-4"
+                      className={`flex-1 btn-primary flex items-center justify-center gap-2 py-4 ${selectedProject.link === "#" ? "opacity-50 cursor-not-allowed" : ""}`}
                     >
                       <ExternalLink className="w-5 h-5" />
                       Live Demo
@@ -141,13 +161,13 @@ const Projects = () => {
         )}
       </AnimatePresence>
 
-      <section ref={targetRef} id="projects" className="relative h-[300vh] bg-[#0a0a0f]">
-        <div className="sticky top-0 h-screen flex items-center overflow-hidden">
-          {/* Fixed Heading with Responsive Scaling */}
-          <div className="absolute top-24 sm:top-32 left-0 right-0 text-center px-4 z-20 pointer-events-none">
+      <section id="projects" className="relative py-24 bg-[#0a0a0f] overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Header Section */}
+          <div className="text-center mb-16 relative z-10">
             <motion.h2
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               className="text-4xl sm:text-6xl md:text-8xl font-black font-display text-white uppercase tracking-tighter"
               style={{
@@ -157,79 +177,105 @@ const Projects = () => {
               Recent <span className="text-gradient">Works</span>
             </motion.h2>
             <motion.p
-              animate={{ x: [0, 10, 0] }}
-              transition={{ duration: 2, repeat: Infinity }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ delay: 0.2 }}
               className="text-gray-500 mt-4 text-sm sm:text-base font-black tracking-widest uppercase flex items-center justify-center gap-2"
             >
-              Scroll Horizontal <span className="text-red-500">→</span>
+              Explore my latest <span className="text-red-500">creations</span>
             </motion.p>
           </div>
 
-          <motion.div style={{ x }} className="flex gap-6 sm:gap-12 px-6 sm:px-24">
-            {projects.map((project, index) => (
-              <div
-                key={index}
-                className="group relative w-[280px] sm:w-[450px] md:w-[600px] flex-shrink-0"
-                onClick={() => setSelectedProject(project)}
+          <div className="relative">
+            {/* Navigation Buttons */}
+            <div className="absolute top-1/2 -translate-y-1/2 left-0 right-0 flex justify-between px-2 md:-mx-12 z-30 pointer-events-none">
+              <button
+                onClick={prevProject}
+                className="w-12 h-12 md:w-16 md:h-16 flex items-center justify-center rounded-full bg-black/40 border border-white/10 text-white hover:bg-red-500 transition-all pointer-events-auto backdrop-blur-md"
               >
-                <div className="glass-card overflow-hidden cursor-pointer h-full border-white/5 hover:border-red-500/30 transition-all duration-500 group-hover:shadow-[0_0_50px_rgba(255,59,48,0.15)]">
-                  <div className={`h-40 sm:h-56 md:h-80 bg-gradient-to-br ${project.gradient} relative overflow-hidden`}>
-                    {project.image ? (
-                      <img
-                        src={project.image}
-                        alt={project.title}
-                        className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-700"
-                      />
-                    ) : (
-                      <>
-                        <div className="absolute inset-0 bg-black/30 group-hover:bg-transparent transition-all duration-700" />
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <Rocket className="w-16 h-16 sm:w-24 sm:h-24 text-white/10 group-hover:scale-125 group-hover:rotate-12 transition-all duration-700" />
+                <ChevronLeft className="w-6 h-6 md:w-8 md:h-8" />
+              </button>
+              <button
+                onClick={nextProject}
+                className="w-12 h-12 md:w-16 md:h-16 flex items-center justify-center rounded-full bg-black/40 border border-white/10 text-white hover:bg-red-500 transition-all pointer-events-auto backdrop-blur-md"
+              >
+                <ChevronRight className="w-6 h-6 md:w-8 md:h-8" />
+              </button>
+            </div>
+
+            {/* Slider Container */}
+            <div className="overflow-visible px-4">
+              <div className="relative h-[400px] sm:h-[500px] md:h-[600px] flex items-center justify-center">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={currentIndex}
+                    initial={{ opacity: 0, x: 100, scale: 0.9 }}
+                    animate={{ opacity: 1, x: 0, scale: 1 }}
+                    exit={{ opacity: 0, x: -100, scale: 0.9 }}
+                    transition={{ type: "spring", stiffness: 100, damping: 20 }}
+                    className="w-full max-w-4xl"
+                    onClick={() => setSelectedProject(projects[currentIndex])}
+                  >
+                    <div className="group glass-card overflow-hidden cursor-pointer border-white/5 hover:border-red-500/30 transition-all duration-500 hover:shadow-[0_0_50px_rgba(255,59,48,0.15)] h-full">
+                      <div className={`h-48 sm:h-64 md:h-96 bg-gradient-to-br ${projects[currentIndex].gradient} relative overflow-hidden`}>
+                        {projects[currentIndex].image ? (
+                          <img
+                            src={projects[currentIndex].image}
+                            alt={projects[currentIndex].title}
+                            className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-700"
+                          />
+                        ) : (
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <Rocket className="w-16 h-16 sm:w-24 sm:h-24 text-white/10 group-hover:scale-125 transition-all" />
+                          </div>
+                        )}
+                        <div className="absolute top-6 left-6">
+                          <span className="px-3 py-1 bg-black/40 backdrop-blur-md rounded-full text-[10px] font-black text-white border border-white/10 uppercase tracking-widest">
+                            {currentIndex + 1} / {projects.length}
+                          </span>
                         </div>
-                      </>
-                    )}
+                        <div className="absolute bottom-6 right-6">
+                          <div className="bg-white text-black px-6 py-2 rounded-full text-xs font-black uppercase flex items-center gap-2 shadow-2xl">
+                            <Eye className="w-4 h-4" /> View Details
+                          </div>
+                        </div>
+                      </div>
 
-                    {/* Floating Tech Tag */}
-                    <div className="absolute top-6 left-6 flex gap-2">
-                      <span className="px-3 py-1 bg-black/40 backdrop-blur-md rounded-full text-[10px] font-black text-white border border-white/10 uppercase tracking-widest">
-                        Featured Project
-                      </span>
-                    </div>
-
-                    <div className="absolute bottom-6 right-6 translate-y-20 group-hover:translate-y-0 transition-all duration-500">
-                      <div className="bg-white text-black px-6 py-2 rounded-full text-xs font-black uppercase flex items-center gap-2 shadow-2xl">
-                        <Eye className="w-4 h-4" /> View Details
+                      <div className="p-6 sm:p-10 space-y-4">
+                        <h3 className="text-2xl sm:text-4xl font-black font-display uppercase tracking-tight group-hover:text-red-500 transition-colors">
+                          {projects[currentIndex].title}
+                        </h3>
+                        <p className="text-gray-400 text-sm sm:text-lg line-clamp-2 leading-relaxed font-medium">
+                          {projects[currentIndex].description}
+                        </p>
+                        <div className="flex flex-wrap gap-2 pt-2">
+                          {projects[currentIndex].tech.map((tech, i) => (
+                            <span key={i} className="text-[10px] md:text-xs font-black text-red-500/70 border border-red-500/20 px-2 py-0.5 rounded uppercase tracking-tighter">
+                              {tech}
+                            </span>
+                          ))}
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+            </div>
+          </div>
 
-                  <div className="p-6 sm:p-10 space-y-4">
-                    <h3 className="text-2xl sm:text-3xl font-black font-display uppercase tracking-tight group-hover:text-red-500 transition-colors">
-                      {project.title}
-                    </h3>
-                    <p className="text-gray-400 text-sm sm:text-base line-clamp-2 leading-relaxed font-medium">
-                      {project.description}
-                    </p>
-                    <div className="flex flex-wrap gap-2 pt-2">
-                      {project.tech.map((tech, i) => (
-                        <span key={i} className="text-[10px] font-black text-red-500/70 border border-red-500/20 px-2 py-0.5 rounded uppercase tracking-tighter">
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
+          <div className="mt-16 text-center">
+            <div className="inline-block p-8 glass-card border-dashed opacity-50 hover:opacity-100 transition-opacity">
+              <div className="flex items-center gap-6">
+                <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center">
+                  <Star className="w-6 h-6 text-red-500 animate-spin-slow" />
+                </div>
+                <div className="text-left">
+                  <h3 className="text-xl font-black uppercase">Next Big Thing</h3>
+                  <p className="text-gray-500 text-sm font-medium">Currently working on something amazing...</p>
                 </div>
               </div>
-            ))}
-
-            <div className="w-[200px] sm:w-[350px] flex-shrink-0 flex flex-col justify-center items-center text-center p-12 glass-card border-dashed opacity-50 hover:opacity-100 transition-opacity">
-              <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mb-6">
-                <Star className="w-8 h-8 text-red-500 animate-spin-slow" />
-              </div>
-              <h3 className="text-xl sm:text-2xl font-black uppercase mb-2">Next Big Thing</h3>
-              <p className="text-gray-500 text-xs sm:text-sm font-medium tracking-tight">Currently working on something amazing...</p>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
     </>
