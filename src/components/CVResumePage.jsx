@@ -19,36 +19,46 @@ const CVResumePage = ({ onBack, profileImage }) => {
             linkedin: "linkedin.com/in/muhammad-mudassir-843964272",
             github: "github.com/MudassirSafi",
         },
-        summary: "Dedicated Full Stack Developer with extensive experience in architecting and implementing scalable, high-performance web applications. Proficient in the MERN stack (MongoDB, Express, React, Node.js), with a strong focus on delivering robust, user-centric solutions. Skilled in modern frontend frameworks, cloud integrations, and developing efficient backend systems. Committed to writing clean, maintainable code and staying at the forefront of emerging technologies to drive technical excellence and business impact.",
+        summary: "Dedicated Full Stack Developer with extensive experience in architecting and implementing scalable, high-performance web applications. Proficient in modern full-stack development (MongoDB, Express, React, Node.js), with a strong focus on delivering robust, user-centric solutions. Skilled in modern frontend frameworks, cloud integrations, and developing efficient backend systems. Committed to writing clean, maintainable code and staying at the forefront of emerging technologies to drive technical excellence and business impact.",
         experience: [
             {
-                title: "Full Stack Developer",
-                company: "Quant Aeonix",
-                period: "Jan 2026 - Present",
+                title: "Software Engineer",
+                company: "FluxtonX",
+                period: "Aug 2025 - Present",
                 achievements: [
                     "Developing and maintaining full-stack web applications with modern architectures.",
-                    "Optimizing frontend performance and backend scalability for high-traffic platforms.",
-                    "Collaborating with cross-functional teams to deliver enterprise-grade solutions."
+                    "Optimizing frontend performance and backend scalability for complex systems.",
+                    "Leading technical initiatives and ensuring code quality across projects."
                 ]
             },
             {
-                title: "MERN Stack Developer",
+                title: "Full Stack Developer",
+                company: "Quant Aeonix",
+                period: "Jan 2025 - July 2025",
+                achievements: [
+                    "Architected scalable systems and implemented complex frontend features.",
+                    "Collaborated on product strategy and optimized application performance.",
+                    "Delivered enterprise-grade solutions for diverse business needs."
+                ]
+            },
+            {
+                title: "Full Stack Developer",
                 company: "Devrolin",
-                period: "Jun 2025 - Dec 2025",
+                period: "March 2024 - Dec 2024",
                 achievements: [
                     "Built robust web solutions using MongoDB, Express, React, and Node.js.",
                     "Implemented real-time features and secure authentication systems.",
-                    "Completed intensive full-stack development phases for multiple client projects."
+                    "Completed intensive development phases for multiple client projects."
                 ]
             },
             {
                 title: "Web Development Intern",
                 company: "TechnoHack Solutions",
-                period: "March 2025 - May 2025",
+                period: "Feb 2024 - March 2024",
                 achievements: [
                     "Assisted in developing frontend components using React and Tailwind CSS.",
-                    "Collaborated with senior developers to debug and optimize existing codebases.",
-                    "Gained hands-on experience in modern web development workflows and version control."
+                    "Collaborated with senior developers to debug and optimize codebases.",
+                    "Gained hands-on experience in modern web development workflows."
                 ]
             }
         ],
@@ -64,6 +74,7 @@ const CVResumePage = ({ onBack, profileImage }) => {
             period: "2021 – 2025"
         },
         projects: [
+            "Kopo Pay – Premium Banking Web Application",
             "Quant-Aeonix – IT Services & Software Company",
             "Medoryx – AI Medical Learning Platform",
             "Smart-echo – Smart Waste Management Admin Panel",

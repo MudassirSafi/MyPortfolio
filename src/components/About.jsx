@@ -46,13 +46,13 @@ const About = () => {
             className="space-y-6"
           >
             <p className="text-lg text-gray-400 leading-relaxed">
-              I'm a dedicated <span className="text-white font-black underline decoration-red-500/50">Full Stack Developer</span> with a strong foundation in modern web technologies. My professional journey in software engineering began in 2025, and since then, I've been focused on building scalable, user-centric applications.
+              I'm a dedicated <span className="text-white font-black underline decoration-red-500/50">Full Stack Developer</span> with a strong foundation in modern web technologies. My professional journey in software engineering began in early 2024, and since then, I've been focused on building scalable, user-centric applications.
             </p>
             <p className="text-lg text-gray-400 leading-relaxed">
-              I specialize in the <span className="text-white font-black underline decoration-blue-500/50">MERN Stack</span> and have successfully delivered multiple complex projects, ranging from business dashboards to high-performance e-commerce platforms. I thrive on solving technical challenges and staying ahead of the AI-driven development curve.
+              I specialize in <span className="text-white font-black underline decoration-blue-500/50">Full Stack Development</span> and have successfully delivered multiple complex projects, ranging from business dashboards to high-performance e-commerce platforms. I thrive on solving technical challenges and staying ahead of the AI-driven development curve.
             </p>
             <div className="flex flex-wrap gap-3 pt-4">
-              {['Problem Solver', 'MERN Expert', 'Quick Learner', 'Detail-Oriented'].map((tag, i) => (
+              {['Problem Solver', 'Full Stack Expert', 'Quick Learner', 'Detail-Oriented'].map((tag, i) => (
                 <motion.span
                   key={tag}
                   initial={{ opacity: 0, y: 20 }}

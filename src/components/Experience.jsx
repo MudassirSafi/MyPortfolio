@@ -5,19 +5,35 @@ import { Code2, Briefcase } from 'lucide-react';
 const Experience = () => {
   const experience = [
     {
-      title: "Full Stack Developer",
-      company: "Quant Aeonix",
-      period: "01 Jan 2026 - Present",
-      description: "Leading the development of full-stack solutions and optimizing application performance.",
-      achievements: ["Architecting scalable systems", "Implementing complex frontend features", "Collaborating on product strategy"],
+      title: "Software Engineer",
+      company: "FluxtonX",
+      period: "Aug 2025 - Present",
+      description: "Leading the development of complex web systems and ensuring high-performance standards.",
+      achievements: ["Optimizing system architecture", "Implementing AI-driven features", "Spearheading frontend excellence"],
       icon: <Briefcase />
     },
     {
-      title: "MERN Stack Developer",
+      title: "Full Stack Developer",
+      company: "Quant Aeonix",
+      period: "Jan 2025 - July 2025",
+      description: "Developed and maintained full-stack web applications with modern architectures.",
+      achievements: ["Architecting scalable systems", "Implementing complex frontend features", "Collaborating on product strategy"],
+      icon: <Code2 />
+    },
+    {
+      title: "Full Stack Developer",
       company: "Devrolin",
-      period: "Jun 2025 - Dec 2025",
-      description: "Specialized in building end-to-end web applications using the MERN stack.",
+      period: "March 2024 - Dec 2024",
+      description: "Specialized in building end-to-end web applications and high-performance platforms.",
       achievements: ["Developed real-time dashboards", "Integrated 3rd party APIs", "Ensured high code quality"],
+      icon: <Briefcase />
+    },
+    {
+      title: "Web Development Intern",
+      company: "TechnoHack Solutions",
+      period: "Feb 2024 - March 2024",
+      description: "Gained hands-on experience in modern web development workflows and version control.",
+      achievements: ["Assisted in developing frontend components", "Collaborated on debugging projects", "Mastered React and Tailwind basics"],
       icon: <Code2 />
     }
   ];

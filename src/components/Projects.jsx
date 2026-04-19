@@ -8,6 +8,15 @@ const Projects = () => {
 
   const projects = [
     {
+      title: "Kopo Pay",
+      description: "A comprehensive banking web application modeled after Stripe, featuring secure payment processing, merchant dashboards, and real-time transaction monitoring. Built with enterprise-grade security and a focus on seamless financial operations.",
+      tech: ["React", "Node.js", "Express", "MongoDB", "Stripe API", "Tailwind CSS"],
+      gradient: "from-indigo-600 to-violet-500",
+      stats: { status: "In Dev", security: "SSL/Encrypted", type: "FinTech" },
+      link: "#",
+      image: "/kopopay.png"
+    },
+    {
       title: "Quant-Aeonix",
       description: "A premium software company providing top-tier IT services and digital solutions. Specializing in scalable architectures, modern web technologies, and client-centric software development.",
       tech: ["React", "Node.js", "Cloud", "IT Services"],
