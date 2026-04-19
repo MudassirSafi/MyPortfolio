@@ -90,10 +90,16 @@ const CVResumePage = ({ onBack, profileImage }) => {
         setIsGenerating(true);
 
         const opt = {
-            margin: [10, 10, 10, 10],
-            filename: 'Muhammad_Mudasir_Resume.pdf',
+            margin: [8, 8, 8, 8],
+            filename: `${cvData.personalInfo.name.replace(/\s+/g, '_')}_Resume.pdf`,
             image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff' },
+            html2canvas: { 
+                scale: 2, 
+                useCORS: true, 
+                letterRendering: true,
+                width: 800,
+                windowWidth: 800
+            },
             jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
             pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
         };
@@ -134,8 +140,10 @@ const CVResumePage = ({ onBack, profileImage }) => {
                 backgroundColor: '#ffffff',
                 color: '#1a1a1a',
                 fontFamily: "'Segoe UI', 'Helvetica Neue', Arial, sans-serif",
-                padding: '48px',
-                minHeight: '1100px',
+                padding: '40px',
+                width: '800px',
+                margin: '0 auto',
+                boxSizing: 'border-box'
             }}
         >
             <div style={{ borderBottom: '1px solid #e5e5e5', paddingBottom: '28px', marginBottom: '32px' }}>
