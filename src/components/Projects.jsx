@@ -17,6 +17,24 @@ const Projects = () => {
       image: "/kopopay.png"
     },
     {
+      title: "AgncyPay",
+      description: "Enterprise FinTech platform for smart CRM automation and high-volume digital asset operations. Official CRM for Mainboard — processing approximately $200M USDT in annual transaction volume on-platform. Full-stack web delivery: branded dashboards, instant transfers, balance and client workflows, secure auth, and automation pipelines built for institutional-scale CRM and treasury movement.",
+      tech: ["React.js", "Next.js", "Node.js", "Express", "MongoDB", "CRM Automation"],
+      gradient: "from-[#282626] to-neutral-500",
+      stats: { role: "Full Stack", partner: "Mainboard CRM", volume: "~$200M USDT/yr", status: "In Dev" },
+      link: "#",
+      image: "/agncypay.png"
+    },
+    {
+      title: "Canadian Digital National Trust Bank",
+      description: "Live Canadian FinTech banking platform where users open insured-style accounts, deposit fiat currencies and cryptocurrency, withdraw funds, and manage digital assets from one secure web experience. Combines regulated banking UX with a built-in crypto engine — balances, savings, and crypto intelligence dashboards on a clean white interface with navy-blue brand typography.",
+      tech: ["React.js", "Next.js", "Node.js", "FinTech", "Crypto Wallets", "Tailwind CSS"],
+      gradient: "from-blue-950 to-blue-700",
+      stats: { status: "Live", type: "FinTech / Banking", region: "Canada" },
+      link: "https://www.cdntbank.com/",
+      image: "/cdntbank.png"
+    },
+    {
       title: "Quant-Aeonix",
       description: "A premium software company providing top-tier IT services and digital solutions. Specializing in scalable architectures, modern web technologies, and client-centric software development.",
       tech: ["React", "Node.js", "Cloud", "IT Services"],
@@ -77,6 +95,15 @@ const Projects = () => {
       stats: { clients: "20+", uptime: "99.9%", status: "Live" },
       link: "#",
       image: "/bizrolin.png"
+    },
+    {
+      title: "SkyRedi",
+      description: "All-in-one travel platform for flyers: flight details, ticketing, live flight tracking, advanced and aviation-grade weather, OCR for tickets, passports, and claim documents, plus document requirement validation. Integrates Paystack, Flutterwave, and Stripe; AI assistant via Gemini/OpenAI; and SITA real-time baggage tracking. Flutter client with backend services I built on Node.js, Firebase Auth, Cloud Storage, and Firestore.",
+      tech: ["Node.js", "Firebase", "Firestore", "Paystack", "Flutterwave", "Stripe", "Gemini/OpenAI"],
+      gradient: "from-sky-500 to-rose-600",
+      stats: { role: "Backend", platform: "Flutter App", status: "In Dev" },
+      link: "#",
+      image: "/skyredi.png"
     }
   ];
 
