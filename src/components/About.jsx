@@ -46,13 +46,13 @@ const About = () => {
             className="space-y-6"
           >
             <p className="text-lg text-gray-400 leading-relaxed">
-              I'm a dedicated <span className="text-white font-black underline decoration-red-500/50">Full Stack Developer</span> with a strong foundation in modern web technologies. My professional journey in software engineering began in early 2024, and since then, I've been focused on building scalable, user-centric applications.
+              I'm a <span className="text-white font-black underline decoration-red-500/50">Full-Stack Software Engineer</span> and <span className="text-white font-black underline decoration-blue-500/50">Product Builder</span> with experience shipping production systems across FinTech, Healthcare, Education, Aviation, and AI. I founded and operate <span className="text-red-400 font-bold">MedVoryx</span> — a live healthcare and education platform serving 800+ users with doctor-patient consultancy and MDCAT/MBBS exam preparation courses.
             </p>
             <p className="text-lg text-gray-400 leading-relaxed">
-              I specialize in <span className="text-white font-black underline decoration-blue-500/50">Full Stack Development</span> and have successfully delivered multiple complex projects, ranging from business dashboards to high-performance e-commerce platforms. I thrive on solving technical challenges and staying ahead of the AI-driven development curve.
+              I specialize in <span className="text-white font-black underline decoration-blue-500/50">backend engineering</span> and full-stack development, having built banking platforms, real-time aviation tracking systems, and AI-powered memory platforms. I focus on scalable architecture, clean code, and delivering products that solve real business problems.
             </p>
             <div className="flex flex-wrap gap-3 pt-4">
-              {['Problem Solver', 'Full Stack Expert', 'Quick Learner', 'Detail-Oriented'].map((tag, i) => (
+              {['Production Systems', 'Backend Engineering', 'Product Owner', 'Full-Stack Development'].map((tag, i) => (
                 <motion.span
                   key={tag}
                   initial={{ opacity: 0, y: 20 }}

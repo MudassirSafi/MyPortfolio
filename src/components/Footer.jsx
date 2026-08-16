@@ -21,7 +21,7 @@ const Footer = ({ profileImage }) => {
                             </div>
                             <div>
                                 <span className="font-bold text-xl tracking-tight block">Mudassir Safi</span>
-                                <span className="text-sm text-gray-400">Full Stack Developer</span>
+                                <span className="text-sm text-gray-400">Full-Stack Software Engineer</span>
                             </div>
                         </div>
                         <p className="text-gray-400 text-sm">

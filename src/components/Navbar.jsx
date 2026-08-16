@@ -29,7 +29,7 @@ const Navbar = ({
               <div className="text-xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
                 Mudassir Safi
               </div>
-              <div className="text-xs text-gray-400">Full Stack Developer</div>
+              <div className="text-xs text-gray-400">Full-Stack Software Engineer</div>
             </div>
           </button>
 

@@ -11,23 +11,33 @@ const CVResumePage = ({ onBack, profileImage }) => {
     const cvData = {
         personalInfo: {
             name: "Muhammad Mudasir",
-            title: "Full Stack Web Developer",
+            title: "Full-Stack Software Engineer | Backend Engineer | Product Builder",
             location: "Islamabad, Pakistan",
             email: "muhammedmudassir40@gmail.com",
             phone: "+92 320 9820283",
             linkedin: "linkedin.com/in/muhammad-mudassir-843964272",
             github: "github.com/MudassirSafi",
         },
-        summary: "Full Stack Web Developer specializing in React.js, Next.js, and Node.js — building production-ready web applications from UI through APIs and databases. Currently developing a FinTech banking platform with secure payments, dashboards, and scalable backend services. Experienced shipping live products (streaming, e-commerce, business dashboards) and owning backend systems for mobile platforms (Firebase, Firestore, payment gateways). Focused on clean architecture, performance, and reliable delivery.",
+        summary: "Full-Stack Software Engineer and Product Builder experienced in shipping production systems across FinTech, Healthcare, Education, Aviation, and AI. Founder of MedVoryx, a live healthcare and education platform serving 800+ users through doctor-patient consultancy and MDCAT/MBBS preparation. Experienced in building financial platforms, real-time aviation systems, AI-powered memory platforms, and scalable web applications from architecture through production.",
         experience: [
+            {
+                title: "Founder / Full-Stack Engineer",
+                company: "MedVoryx",
+                period: "2026 - Present",
+                achievements: [
+                    "Founded and operate a live healthcare and education platform serving 800+ users with doctor-patient consultancy and MDCAT/MBBS exam preparation courses.",
+                    "Built complete full-stack system from concept to production including authentication, role-based access, and secure data management.",
+                    "Implemented AI-driven health insights, intelligent scheduling, course management, and comprehensive study materials."
+                ]
+            },
             {
                 title: "Software Engineer",
                 company: "FluxtonX",
                 period: "Aug 2025 - Present",
                 achievements: [
-                    "Lead full-stack development on a FinTech web application: payment flows, merchant dashboards, and transaction monitoring using React.js and Node.js.",
-                    "Design REST APIs and data models for secure financial operations; enforce authentication, validation, and maintainable service layers.",
-                    "Improve frontend performance and backend scalability through code reviews, refactoring, and production-focused debugging."
+                    "Lead full-stack development on production FinTech systems including CDNTBank web application serving 100+ users.",
+                    "Built banking platform with secure payment processing, merchant dashboards, and real-time transaction monitoring.",
+                    "Designed REST APIs and data models for secure financial operations; enforced authentication, validation, and maintainable service layers."
                 ]
             },
             {
@@ -78,11 +88,68 @@ const CVResumePage = ({ onBack, profileImage }) => {
         ],
         domainExpertise: [
             "FinTech & Digital Payments",
+            "Healthcare & Education Platforms",
+            "AI & Hardware Integration",
             "CRM & Treasury Automation",
-            "Live Streaming (Production)",
             "E-commerce & SaaS Dashboards"
         ],
         projects: [
+            {
+                name: "MedVoryx — Healthcare & Medical Education Platform",
+                context: "Founder · Full-Stack Engineer · Live · 800+ Users",
+                highlights: [
+                    "Founded and engineered MedVoryx into a live healthcare and medical education platform serving 800+ users, combining doctor-patient consultation workflows with MDCAT/MBBS preparation.",
+                    "Built complete full-stack architecture from concept to production: React.js frontend, Node.js backend, MongoDB database, authentication system, and role-based access control for doctors, patients, and students.",
+                    "Implemented doctor-patient consultancy workflows with intelligent scheduling, appointment management, and secure patient data handling compliant with healthcare requirements.",
+                    "Developed medical education system for MDCAT/MBBS preparation including course management, study materials, and comprehensive learning resources.",
+                    "Deployed and operate the production platform at medvoryx.com with continuous development, monitoring, and user support."
+                ]
+            },
+            {
+                name: "CDNT Bank",
+                context: "FinTech · FluxtonX Client · Live Banking Platform",
+                highlights: [
+                    "Live Canadian FinTech banking platform for FluxtonX client CDNTBank serving 100+ users.",
+                    "Built complete web application with banking UX, crypto engine, balance dashboards, secure transaction flows, and unified account management.",
+                    "Stack: React.js, Next.js, Node.js, FinTech, Crypto Wallets — cdntbank.com"
+                ]
+            },
+            {
+                name: "FlyRedi",
+                context: "Aviation · Backend Engineer · Real-Time Systems",
+                highlights: [
+                    "Aviation platform providing aircraft management and live flight tracking with real-time data.",
+                    "Built complete backend infrastructure: Node.js APIs, Firebase Auth, Cloud Storage, Firestore for Flutter mobile client, payment gateway integrations.",
+                    "Stack: Node.js, Firebase, Firestore, Real-time APIs, Payment Gateways"
+                ]
+            },
+            {
+                name: "Spoken Odyssey",
+                context: "AI + Hardware + Memory · Full-Stack Engineer · Live Platform",
+                highlights: [
+                    "AI-powered digital memory platform connected to smart recording glasses. Users register, capture photo/video memories through glasses, store securely, and share with family members.",
+                    "Built complete web platform with user authentication, memory management, family sharing features, and Odyssey Store for purchasing glasses.",
+                    "Stack: React.js, Node.js, AI Integration, E-commerce, Hardware Integration, Memory Management — spokenodyssey.com"
+                ]
+            },
+            {
+                name: "AgncyPay",
+                context: "FinTech · CRM Automation · Full Stack Web Developer",
+                highlights: [
+                    "Enterprise FinTech platform for smart CRM automation and high-volume digital asset operations.",
+                    "Official CRM for Mainboard — processing approximately $200M USDT in annual transaction volume on-platform.",
+                    "Stack: React.js, Next.js, Node.js, Express, MongoDB, CRM Automation"
+                ]
+            },
+            {
+                name: "BudVizion",
+                context: "Live · Real-Time Streaming Platform",
+                highlights: [
+                    "Production streaming platform with active users; live broadcast, viewer engagement, and low-latency delivery.",
+                    "Built full-stack architecture using WebRTC for real-time streaming — deployed and maintained at budvizion.com.",
+                    "Stack: React.js, Node.js, WebRTC, SQL, Real-time Systems"
+                ]
+            },
             {
                 name: "Kopo Pay",
                 context: "FinTech · Banking Web App (In Development)",
@@ -91,86 +158,6 @@ const CVResumePage = ({ onBack, profileImage }) => {
                     "Stack: React.js, Node.js, Express, MongoDB, Stripe API — aligned with current FinTech work at FluxtonX."
                 ]
             },
-            {
-                name: "AgncyPay",
-                context: "FinTech · CRM Automation · Full Stack Web Developer",
-                highlights: [
-                    "Smart CRM automation platform for institutional digital-asset flows; sole official CRM for Mainboard (~$200M USDT transacted annually on-platform).",
-                    "Full-stack delivery: React.js/Next.js frontends, Node.js APIs, dashboards, transfers, balances, and secure client workflows on a monochrome enterprise brand system."
-                ]
-            },
-            {
-                name: "CDNT Bank",
-                context: "FinTech · Live Banking & Crypto Platform",
-                highlights: [
-                    "Canadian Digital National Trust Bank — live web app for fiat and cryptocurrency deposits, withdrawals, and unified account management (cdntbank.com).",
-                    "Banking-meets-crypto UX: insured-style accounts, balance dashboards, and regulated FinTech flows on a white UI with navy-blue brand system."
-                ]
-            },
-            {
-                name: "BudVizion",
-                context: "Live · Real-Time Streaming Platform",
-                highlights: [
-                    "Production streaming product with active users; live broadcast, viewer engagement, and low-latency delivery.",
-                    "Stack: React.js, Node.js, WebRTC, SQL — deployed and maintained at budvizion.com."
-                ]
-            },
-            {
-                name: "SkyRedi",
-                context: "Travel & Aviation · Backend Engineer",
-                highlights: [
-                    "Travel platform: flights, ticketing, tracking, aviation weather, OCR for travel documents, Paystack/Flutterwave/Stripe, AI assistant, SITA baggage tracking.",
-                    "Built Node.js backend with Firebase Auth, Cloud Storage, and Firestore for a Flutter mobile client."
-                ]
-            },
-            {
-                name: "2Wolf E-commerce",
-                context: "E-Commerce · Live",
-                highlights: [
-                    "Premium storefront with checkout, product management, and Stripe payments.",
-                    "Stack: Next.js, Node.js, Tailwind CSS."
-                ]
-            },
-            {
-                name: "SME Dashboard",
-                context: "Business Analytics · Live",
-                highlights: [
-                    "SME dashboard with real-time analytics, financial tracking, and reporting modules.",
-                    "Stack: React.js, Node.js, MongoDB, Chart.js."
-                ]
-            },
-            {
-                name: "Quant-Aeonix",
-                context: "IT Services & Software Company · Live",
-                highlights: [
-                    "Company platform for IT services, scalable web architecture, and client-facing digital solutions.",
-                    "Stack: React.js, Node.js, cloud deployments — quantaeonix.com."
-                ]
-            },
-            {
-                name: "Medoryx",
-                context: "HealthTech · AI Platform (In Development)",
-                highlights: [
-                    "AI-driven medical learning and doctor–patient consultancy with scheduling and health insights.",
-                    "Stack: React.js, AI/vector embeddings, modern API integrations."
-                ]
-            },
-            {
-                name: "Bizrolin",
-                context: "Business Solutions · Live",
-                highlights: [
-                    "Professional services platform with scalable Node.js APIs and React.js frontends for client operations.",
-                    "Stack: React.js, Node.js, Express, Tailwind CSS."
-                ]
-            },
-            {
-                name: "Smart-echo",
-                context: "IoT / Waste Management · Admin Panel",
-                highlights: [
-                    "Admin dashboard for smart waste operations: monitoring, routing insights, and operational controls.",
-                    "Stack: React.js, dashboard/SaaS patterns for field IoT data."
-                ]
-            }
         ]
     };
 

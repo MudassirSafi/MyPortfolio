@@ -4,6 +4,7 @@ import CVResumePage from './components/CVResumePage';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
+import ProductionImpact from './components/ProductionImpact';
 import TechStack from './components/TechStack';
 import Projects from './components/Projects';
 import Experience from './components/Experience';
@@ -86,6 +87,7 @@ export default function PremiumPortfolio() {
 
       <Hero scrollToSection={scrollToSection} profileImage={profileImage} isLoaded={isLoaded} />
       <About />
+      <ProductionImpact />
       <TechStack />
       <Projects />
       <Experience />

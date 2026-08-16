@@ -27,14 +27,14 @@ const Hero = ({ scrollToSection, profileImage, isLoaded }) => {
               start={isLoaded}
               loop={true}
               phrases={[
-                { text: "SOFTWARE", className: "text-white", block: true },
-                { text: "ENGINEER", className: "bg-gradient-to-r from-red-500 via-purple-500 to-blue-500 bg-clip-text text-transparent", block: true }
+                { text: "FULL-STACK", className: "text-white", block: true },
+                { text: "SOFTWARE ENGINEER", className: "bg-gradient-to-r from-red-500 via-purple-500 to-blue-500 bg-clip-text text-transparent", block: true }
               ]}
             />
           </h1>
 
           <p className="text-lg md:text-xl text-gray-400 max-w-xl mx-auto lg:mx-0 leading-relaxed">
-            Full Stack Developer specializing in building <span className="text-white font-medium">high-performance</span> digital experiences with modern technologies.
+            Building <span className="text-white font-medium">production systems</span> across FinTech, Healthcare, Education, Aviation, and AI. Founder of live platforms serving <span className="text-red-400 font-bold">800+ users</span>.
           </p>
 
           <div className="flex flex-wrap justify-center lg:justify-start gap-4 pt-4">

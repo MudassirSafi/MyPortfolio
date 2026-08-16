@@ -8,17 +8,44 @@ const Projects = () => {
 
   const projects = [
     {
-      title: "Kopo Pay",
-      description: "A comprehensive banking web application modeled after Stripe, featuring secure payment processing, merchant dashboards, and real-time transaction monitoring. Built with enterprise-grade security and a focus on seamless financial operations.",
-      tech: ["React", "Node.js", "Express", "MongoDB", "Stripe API", "Tailwind CSS"],
-      gradient: "from-indigo-600 to-violet-500",
-      stats: { status: "In Dev", security: "SSL/Encrypted", type: "FinTech" },
+      title: "MedVoryx — Healthcare & Medical Education Platform",
+      description: "Healthcare and medical education platform I founded and operate — combining doctor-patient consultation workflows with MDCAT/MBBS preparation. Built complete full-stack architecture from concept to production: React.js frontend, Node.js backend, MongoDB database, authentication system, and role-based access control for doctors, patients, and students. Implemented intelligent scheduling, appointment management, secure patient data handling, and comprehensive learning resources. Currently serving 800+ users.",
+      tech: ["React", "Node.js", "MongoDB", "Authentication", "RBAC", "Healthcare", "Education"],
+      gradient: "from-emerald-600 to-teal-500",
+      stats: { users: "800+", role: "Founder · Full-Stack Engineer", status: "Live", type: "Healthcare + Education" },
+      link: "https://medvoryx.com",
+      image: "/medoryxproject.png"
+    },
+    {
+      title: "Canadian Digital National Trust Bank",
+      description: "Live Canadian FinTech banking platform for FluxtonX client CDNTBank. Users open insured-style accounts, deposit fiat and cryptocurrency, withdraw funds, and manage digital assets. Built the complete web application with banking UX, crypto engine, balance dashboards, and secure transaction flows.",
+      tech: ["React.js", "Next.js", "Node.js", "FinTech", "Crypto Wallets", "Tailwind CSS"],
+      gradient: "from-blue-950 to-blue-700",
+      stats: { users: "100+", role: "Full-Stack Engineer", status: "Live", type: "FinTech / Banking" },
+      link: "https://www.cdntbank.com/",
+      image: "/cdntbank.png"
+    },
+    {
+      title: "FlyRedi",
+      description: "Aviation platform providing aircraft management and live flight tracking. Built the complete backend infrastructure including Node.js APIs, Firebase Authentication, Cloud Storage, and Firestore for the Flutter mobile client. Features real-time aviation data, document OCR, and payment gateway integrations.",
+      tech: ["Node.js", "Firebase", "Firestore", "Real-time APIs", "Payment Gateways"],
+      gradient: "from-sky-500 to-rose-600",
+      stats: { role: "Backend Engineer", platform: "Mobile App", status: "In Dev", type: "Aviation" },
       link: "#",
-      image: "/kopopay.png"
+      image: "/skyredi.png"
+    },
+    {
+      title: "Spoken Odyssey",
+      description: "AI-powered digital memory platform connected to smart recording glasses. Users register, capture photo/video memories through connected glasses, store them securely, and share with family members. Built complete web platform with user authentication, memory management, family sharing features, and Odyssey Store for purchasing glasses. Full-stack engineering on hardware-software integration.",
+      tech: ["React", "Node.js", "AI Integration", "E-commerce", "Hardware Integration", "Memory Management"],
+      gradient: "from-purple-600 to-pink-500",
+      stats: { role: "Full-Stack Engineer", status: "Live", type: "AI + Hardware + Memory" },
+      link: "https://spokenodyssey.com",
+      image: "/odyssey.png"
     },
     {
       title: "AgncyPay",
-      description: "Enterprise FinTech platform for smart CRM automation and high-volume digital asset operations. Official CRM for Mainboard — processing approximately $200M USDT in annual transaction volume on-platform. Full-stack web delivery: branded dashboards, instant transfers, balance and client workflows, secure auth, and automation pipelines built for institutional-scale CRM and treasury movement.",
+      description: "Enterprise FinTech platform for smart CRM automation and high-volume digital asset operations. Official CRM for Mainboard — processing approximately $200M USDT in annual transaction volume on-platform. Full-stack web delivery: branded dashboards, instant transfers, balance and client workflows, secure auth, and automation pipelines.",
       tech: ["React.js", "Next.js", "Node.js", "Express", "MongoDB", "CRM Automation"],
       gradient: "from-[#282626] to-neutral-500",
       stats: { role: "Full Stack", partner: "Mainboard CRM", volume: "~$200M USDT/yr", status: "In Dev" },
@@ -26,85 +53,23 @@ const Projects = () => {
       image: "/agncypay.png"
     },
     {
-      title: "Canadian Digital National Trust Bank",
-      description: "Live Canadian FinTech banking platform where users open insured-style accounts, deposit fiat currencies and cryptocurrency, withdraw funds, and manage digital assets from one secure web experience. Combines regulated banking UX with a built-in crypto engine — balances, savings, and crypto intelligence dashboards on a clean white interface with navy-blue brand typography.",
-      tech: ["React.js", "Next.js", "Node.js", "FinTech", "Crypto Wallets", "Tailwind CSS"],
-      gradient: "from-blue-950 to-blue-700",
-      stats: { status: "Live", type: "FinTech / Banking", region: "Canada" },
-      link: "https://www.cdntbank.com/",
-      image: "/cdntbank.png"
-    },
-    {
-      title: "Quant-Aeonix",
-      description: "A premium software company providing top-tier IT services and digital solutions. Specializing in scalable architectures, modern web technologies, and client-centric software development.",
-      tech: ["React", "Node.js", "Cloud", "IT Services"],
-      gradient: "from-blue-700 to-indigo-600",
-      stats: { status: "Live", projects: "50+", rating: "5.0/5" },
-      link: "https://quantaeonix.com",
-      image: "/aeonix.png"
-    },
-    {
-      title: "Medoryx",
-      description: "Smart AI-based learning and doctor-patient consultancy platform. Features intelligent scheduling, real-time consultation, and AI-driven health insights.",
-      tech: ["React", "AI", "Vector DB", "Embedding"],
-      gradient: "from-emerald-600 to-teal-500",
-      stats: { users: "Coming Soon", accuracy: "99%", status: "In Dev" },
-      link: "#",
-      image: "/medoryxproject.png"
-    },
-    {
-      title: "Smart-echo",
-      description: "Advanced Admin Panel for Smart Waste Management System. Streamlining urban waste collection through real-time monitoring and data-driven insights.",
-      tech: ["React", "Admin Panel", "Dashboard", "SaaS"],
-      gradient: "from-orange-600 to-red-500",
-      stats: { status: "Placeholder", type: "Admin", field: "IoT/Waste" },
-      link: "#",
-      image: "/smartecho.png"
-    },
-    {
       title: "BudVizion",
-      description: "A real-time streaming web application platform. Production-ready architecture for seamless live broadcasting and viewer engagement.",
-      tech: ["React", "Node.js", "WebRTC", "SQL"],
+      description: "Production real-time streaming web application platform. Built the full-stack architecture for live broadcasting, viewer engagement, and low-latency delivery using WebRTC. Deployed and maintained at budvizion.com with active users.",
+      tech: ["React", "Node.js", "WebRTC", "SQL", "Real-time Systems"],
       gradient: "from-purple-600 to-pink-500",
-      stats: { uptime: "99.99%", latency: "<50ms", quality: "4K" },
+      stats: { status: "Live", type: "Streaming", uptime: "99.99%", latency: "<50ms" },
       link: "https://budvizion.com/",
       image: "/BudVizion.png"
     },
     {
-      title: "2Wolf E-commerce",
-      description: "Premium e-commerce platform with seamless shopping experience, secure payments, and dynamic product management.",
-      tech: ["Next.js", "Tailwind CSS", "Stripe", "Node.js"],
-      gradient: "from-gray-900 to-gray-700",
-      stats: { sales: "5K+", rating: "4.9/5", speed: "98/100" },
-      image: "/2wolff.png"
-    },
-    {
-      title: "SME Dashboard",
-      description: "Comprehensive business dashboard for small and medium enterprises. Real-time analytics, financial tracking, and performance insights all in one place.",
-      tech: ["React", "Node.js", "MongoDB", "Chart.js"],
-      gradient: "from-cyan-600 to-blue-500",
-      stats: { modules: "12+", reports: "Real-time", status: "Live" },
+      title: "Kopo Pay",
+      description: "Comprehensive banking web application modeled after Stripe, featuring secure payment processing, merchant dashboards, and real-time transaction monitoring. Built with enterprise-grade security and a focus on seamless financial operations.",
+      tech: ["React", "Node.js", "Express", "MongoDB", "Stripe API", "Tailwind CSS"],
+      gradient: "from-indigo-600 to-violet-500",
+      stats: { status: "In Dev", type: "FinTech", security: "SSL/Encrypted" },
       link: "#",
-      image: "/SME dashboard.png"
+      image: "/kopopay.png"
     },
-    {
-      title: "Bizrolin",
-      description: "Professional business solutions platform providing modern digital services. Clean architecture with scalable infrastructure and intuitive user interfaces.",
-      tech: ["React", "Tailwind CSS", "Node.js", "Express"],
-      gradient: "from-amber-600 to-yellow-500",
-      stats: { clients: "20+", uptime: "99.9%", status: "Live" },
-      link: "#",
-      image: "/bizrolin.png"
-    },
-    {
-      title: "SkyRedi",
-      description: "All-in-one travel platform for flyers: flight details, ticketing, live flight tracking, advanced and aviation-grade weather, OCR for tickets, passports, and claim documents, plus document requirement validation. Integrates Paystack, Flutterwave, and Stripe; AI assistant via Gemini/OpenAI; and SITA real-time baggage tracking. Flutter client with backend services I built on Node.js, Firebase Auth, Cloud Storage, and Firestore.",
-      tech: ["Node.js", "Firebase", "Firestore", "Paystack", "Flutterwave", "Stripe", "Gemini/OpenAI"],
-      gradient: "from-sky-500 to-rose-600",
-      stats: { role: "Backend", platform: "Flutter App", status: "In Dev" },
-      link: "#",
-      image: "/skyredi.png"
-    }
   ];
 
   const nextProject = () => {

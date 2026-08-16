@@ -5,27 +5,35 @@ import { Code2, Briefcase } from 'lucide-react';
 const Experience = () => {
   const experience = [
     {
+      title: "Founder / Full-Stack Engineer",
+      company: "MedVoryx",
+      period: "2026 - Present",
+      description: "Founded and operate a live healthcare and education platform serving 800+ users. Built complete system from concept to production including doctor-patient consultancy workflows, AI-driven health insights, intelligent scheduling, and MDCAT/MBBS exam preparation courses with comprehensive study materials.",
+      achievements: ["Founded and scaled healthcare and education platform to 800+ users", "Built full-stack system with authentication and role-based access", "Implemented AI-powered health insights, scheduling, and course management"],
+      icon: <Briefcase />
+    },
+    {
       title: "Software Engineer",
       company: "FluxtonX",
       period: "Aug 2025 - Present",
-      description: "Leading the development of complex web systems and ensuring high-performance standards.",
-      achievements: ["Optimizing system architecture", "Implementing AI-driven features", "Spearheading frontend excellence"],
+      description: "Lead full-stack development on production FinTech systems including banking platforms and payment processing applications. Engineered secure financial operations, REST APIs, and scalable backend services.",
+      achievements: ["Built CDNTBank web application serving 100+ users", "Designed REST APIs and data models for secure financial operations", "Improved frontend performance and backend scalability"],
       icon: <Briefcase />
     },
     {
       title: "Full Stack Developer",
       company: "Quant Aeonix",
       period: "Jan 2025 - July 2025",
-      description: "Developed and maintained full-stack web applications with modern architectures.",
-      achievements: ["Architecting scalable systems", "Implementing complex frontend features", "Collaborating on product strategy"],
+      description: "Developed and maintained full-stack web applications with modern architectures for enterprise clients.",
+      achievements: ["Architected scalable systems", "Implemented complex frontend features", "Collaborated on product strategy"],
       icon: <Code2 />
     },
     {
       title: "Full Stack Developer",
       company: "Devrolin",
       period: "March 2024 - Dec 2024",
-      description: "Specialized in building end-to-end web applications and high-performance platforms.",
-      achievements: ["Developed real-time dashboards", "Integrated 3rd party APIs", "Ensured high code quality"],
+      description: "Specialized in building end-to-end web applications and high-performance platforms using MERN stack.",
+      achievements: ["Delivered MERN-stack applications end to end", "Implemented JWT-based authentication and real-time features", "Owned multiple release cycles from requirements to deployment"],
       icon: <Briefcase />
     },
     {

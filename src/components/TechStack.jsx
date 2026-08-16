@@ -5,22 +5,22 @@ import FloatingCard from './FloatingCard';
 const TechStack = () => {
     const techStack = {
         frontend: [
-            { name: 'React', icon: <Code2 />, color: 'from-cyan-400 to-blue-500' },
+            { name: 'React.js', icon: <Code2 />, color: 'from-cyan-400 to-blue-500' },
             { name: 'Next.js', icon: <Layers />, color: 'from-gray-700 to-black' },
-            { name: 'TypeScript', icon: <Terminal />, color: 'from-blue-400 to-blue-600' },
+            { name: 'JavaScript (ES6+)', icon: <Terminal />, color: 'from-yellow-400 to-yellow-600' },
             { name: 'Tailwind CSS', icon: <Zap />, color: 'from-teal-400 to-cyan-500' }
         ],
         backend: [
             { name: 'Node.js', icon: <Server />, color: 'from-green-500 to-green-700' },
-            { name: 'Python', icon: <Code2 />, color: 'from-yellow-400 to-blue-500' },
-            { name: 'MongoDB', icon: <Database />, color: 'from-green-400 to-green-600' },
-            { name: 'PostgreSQL', icon: <Database />, color: 'from-blue-500 to-indigo-600' }
+            { name: 'Express.js', icon: <Code2 />, color: 'from-gray-400 to-gray-600' },
+            { name: 'Python', icon: <Terminal />, color: 'from-yellow-400 to-blue-500' },
+            { name: 'FastAPI', icon: <Zap />, color: 'from-green-400 to-teal-500' }
         ],
-        cloud: [
-            { name: 'AWS', icon: <Cloud />, color: 'from-orange-400 to-orange-600' },
-            { name: 'Docker', icon: <Cpu />, color: 'from-blue-400 to-blue-600' },
-            { name: 'Kubernetes', icon: <Globe />, color: 'from-blue-500 to-purple-600' },
-            { name: 'CI/CD', icon: <Zap />, color: 'from-purple-400 to-pink-500' }
+        database: [
+            { name: 'MongoDB', icon: <Database />, color: 'from-green-400 to-green-600' },
+            { name: 'MySQL', icon: <Database />, color: 'from-blue-400 to-blue-600' },
+            { name: 'Supabase', icon: <Server />, color: 'from-emerald-400 to-green-500' },
+            { name: 'REST APIs', icon: <Terminal />, color: 'from-purple-400 to-purple-600' }
         ]
     };
 
